@@ -712,9 +712,12 @@
                   "Register": {
                     "summary": "Retorna um item específico de pedido cadastrado",
                     "value": {
-                      "id": "3",
-                      "product_id": "48",
-                      "quantity": 5
+                      "item_list_id": "ecf15621-ea89-40b8-bca4-5e5f93a598c3",
+                      "product_id": "19",
+                      "product_name": "ENERGÉTICO RED BULL ENERGY DRINK 250ML",
+                      "price": 7.29,
+                      "quantity": 2,
+                      "total": 14.58
                     }
                   }
                 }
