@@ -1,0 +1,922 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shopper System",
+    "description": "Sistema de cadastro de produtos e pedidos de supermercado.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/products": {
+      "post": {
+        "summary": "Cadastra um novo produto",
+        "tags": ["PRODUTOS"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Produto"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Cadastra um novo produto",
+                  "value": {
+                    "name": "Água Mineral",
+                    "price": 3.45,
+                    "qty_stock": 25
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto cadastrado com sucesso!",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
+                      "name": "Água Mineral",
+                      "price": 3.45,
+                      "qty_stock": 25
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "É retornado quando já existe um produto cadastrado no sistema com o nome informado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 400,
+                      "message": "Name already exists",
+                      "error": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retorna todos os produtos cadastrados",
+        "tags": ["PRODUTOS"],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Search All": {
+                    "value": [
+                      {
+                        "id": "16",
+                        "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                        "price": 20.49,
+                        "qty_stock": 158
+                      },
+                      {
+                        "id": "18",
+                        "name": "BEBIDA ENERGÉTICA VIBE 2L",
+                        "price": 8.99,
+                        "qty_stock": 659
+                      },
+                      {
+                        "id": "19",
+                        "name": "ENERGÉTICO RED BULL ENERGY DRINK 250ML",
+                        "price": 7.29,
+                        "qty_stock": 909
+                      },
+                      {
+                        "id": "20",
+                        "name": "ENERGÉTICO RED BULL ENERGY DRINK 355ML",
+                        "price": 10.79,
+                        "qty_stock": 159
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Retorna um produto específico de acordo com o ID informado",
+        "tags": ["PRODUTOS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna um produto específico",
+                    "value": {
+                      "id": "16",
+                      "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                      "price": 20.49,
+                      "qty_stock": 158
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "product with id '101' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Altera algum atributo do produto de acordo com o ID informado",
+        "tags": ["PRODUTOS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Produto"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Altera um produto",
+                  "value": {
+                    "name": "Água Mineral",
+                    "price": 3.45,
+                    "qty_stock": 25
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna o produto com a alteração",
+                    "value": {
+                      "id": "16",
+                      "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                      "price": 20.49,
+                      "qty_stock": 158
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "product with id '101' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um produto de acordo com o ID informado",
+        "tags": ["PRODUTOS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Deleta um produto específico",
+                    "value": {
+                      "id": "43e172ac-f044-4599-a756-77c54afdfc33",
+                      "name": "SmartPhone S20FE 2022",
+                      "price": 3500.99,
+                      "qty_stock": 32
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "product with id '101' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/stock/unavailable": {
+      "get": {
+        "summary": "Retorna uma lista com os produtos sem estoque",
+        "tags": ["PRODUTOS"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna produtos sem estoque",
+                    "value": [
+                      {
+                        "id": "7fc62fc5-79aa-4e54-91ca-2e4cd75b4abd",
+                        "name": "ÁGUA MINERAL COM GÁS 500ml",
+                        "price": 3.45,
+                        "qty_stock": 0
+                      },
+                      {
+                        "id": "9c4f0a5b-7696-499e-ba96-33adf30b897f",
+                        "name": "DESODORANTE AEROSOL SEM PERFUME 120ML",
+                        "price": 11.57,
+                        "qty_stock": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "There is no product with stock unavailable",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Cadastra um novo pedido",
+        "tags": ["PEDIDOS"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pedido"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Cadastra um novo pedido",
+                  "value": {
+                    "delivery_date": "2022-10-05T12:09:04.374Z",
+                    "client_name": "João",
+                    "items_list_id": ["11", "12", "13"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedido cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um item da lista de ID's não é contrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "item list with id '101' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retorna todos os pedidos cadastrados",
+        "tags": ["PEDIDOS"],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Search All": {
+                    "value": [
+                      {
+                        "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                        "client_name": "João",
+                        "delivery_date": "2022-10-05T12:09:04.374Z",
+                        "shopping_list": [
+                          {
+                            "product": "COLHER DESCARTÁVEL MASTER PRAFESTA BRANCA C/ 50UN",
+                            "quantity": 3,
+                            "price": 5.99
+                          },
+                          {
+                            "product": "GARFO DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
+                            "quantity": 2,
+                            "price": 7.49
+                          },
+                          {
+                            "product": "FACA DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
+                            "quantity": 5,
+                            "price": 8.99
+                          }
+                        ],
+                        "total_amount": 77.9
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "summary": "Retorna um pedido específico de acordo com o ID informado",
+        "tags": ["PEDIDOS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna um pedido específico",
+                    "value": {
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um pedido não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "order with id '4720c32a-9skfjq23' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Altera um pedido de acordo com o ID informado",
+        "tags": ["PEDIDOS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pedido"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Altera um pedido",
+                  "value": {
+                    "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Mostra o pedido após alteração",
+                    "value": {
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "3"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "product with id '101' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items-list": {
+      "post": {
+        "summary": "Cadastra um novo item na lista de compras",
+        "tags": ["LISTA DE ITENS"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListaItens"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Cadastra um novo item na lista de compras",
+                  "value": {
+                    "product_id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                    "quantity": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Item adicionado na lista de compras com sucesso!",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
+                      "name": "Água Mineral",
+                      "price": 3.45,
+                      "qty_stock": 25
+                    }
+                  }
+                }
+              }
+            }
+          },
+          
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "item not found with id '0b2f1698-a548-4175-b51e-1673a88e71d4'",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retorna todos os itens de pedido cadastrados",
+        "tags": ["LISTA DE ITENS"],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Search All": {
+                    "summary": "Retorna todos os itens de pedido cadastrados",
+                    "value": [
+                      {
+                        "id": "1",
+                        "product_id": "45",
+                        "quantity": 3
+                      },
+                      {
+                        "id": "2",
+                        "product_id": "47",
+                        "quantity": 2
+                      },
+                      {
+                        "id": "3",
+                        "product_id": "48",
+                        "quantity": 5
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando não foi encontrado nenhum item de pedido",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "order with id '4720c32a-9skfjq23' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items-list/{id}": {
+      "get": {
+        "summary": "Retorna um item de pedido cadastrado de acordo com o ID informado",
+        "tags": ["LISTA DE ITENS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna um item específico de pedido cadastrado",
+                    "value": {
+                      "id": "3",
+                      "product_id": "48",
+                      "quantity": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando não foi encontrado nenhum item de pedido com ID informado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "item not found with id '77'",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Altera a quantidade de um item de pedido específico",
+        "tags": ["LISTA DE ITENS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListaItensUpddate"
+              },
+              "examples": {
+                "Register": {
+                  "summary": "Altera a quantidade de um item de pedido específico",
+                  "value": {
+                    "quantity": 11
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna o item de pedido com a alteração",
+                    "value": {
+                      "id": "3",
+                      "product_id": "48",
+                      "quantity": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um item de pedido não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "list item with id '7cb1cc21-5b60-438a-9c54-c52c8ac5ee1f' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um item de pedido de acordo com o ID informado",
+        "tags": ["LISTA DE ITENS"],
+        "parameters": [
+          {
+            "name": "id",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Deleta um item de pedido específico",
+                    "value": {
+                      "id": "3",
+                      "product_id": "48",
+                      "quantity": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um item de pedido não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "list item with id '7cb1cc21-5b60-438a-9c54-c52c8ac5ee1f' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Produto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do produto"
+          },
+          "price": {
+            "type": "float",
+            "description": "Preço do produto"
+          },
+          "qty_stock": {
+            "type": "integer",
+            "description": "Quantidade em estoque do produto"
+          }
+        }
+      },
+      "Pedido": {
+        "type": "object",
+        "properties": {
+          "delivery_date": {
+            "type": "date",
+            "description": "Data de entrega"
+          },
+          "client_name": {
+            "type": "string",
+            "description": "Nome do cliente"
+          },
+          "items_list_id": {
+            "type": "string[]",
+            "description": "Lista de ID's dos itens do pedido"
+          }
+        }
+      },
+      "ListaItens": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "description": "ID do produto"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Quantidade do produto no pedido"
+          }
+        }
+      },
+      "ListaItensUpddate": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "description": "Quantidade do produto no pedido"
+          }
+        }
+      }
+    }
+  }
+}
