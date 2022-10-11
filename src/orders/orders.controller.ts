@@ -58,7 +58,7 @@ export class OrdersController {
           order.items_list_id[j],
         );
         const itemList = await this.productsService.findOneById(
-          orderItem.product_id,
+          orderItem?.product_id,
         );
         if (order.items_list_id.includes(orderItem.id)) {
           const shoppingItem = {

@@ -35,9 +35,21 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
-  }
+  async findAll() {
+    const allProducts = await this.productsService.findAll();
+    return allProducts.sort((a, b) => {
+      let fa = a.name.toLowerCase(),
+          fb = b.name.toLowerCase();
+          
+      if (fa.localeCompare(fb) < fb.localeCompare(fa)) {
+          return -1;
+      }
+      if (fa.localeCompare(fb) > fb.localeCompare(fa)) {
+          return 1;
+      }
+      return 0;
+  })
+  }    
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
