@@ -649,19 +649,28 @@
                     "summary": "Retorna todos os itens de pedido cadastrados",
                     "value": [
                       {
-                        "id": "1",
-                        "product_id": "45",
-                        "quantity": 3
+                        "item_list_id": "6d3c0197-0261-43ee-be0a-65dd267d81cb",
+                        "product_id": "18",
+                        "product_name": "BEBIDA ENERGÉTICA VIBE 2L",
+                        "price": 8.99,
+                        "quantity": 5,
+                        "total": 44.95
                       },
                       {
-                        "id": "2",
+                        "item_list_id": "08fdcbbe-5037-4c05-adf4-5632402b8399",
                         "product_id": "47",
-                        "quantity": 2
+                        "product_name": "GARFO DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
+                        "price": 7.49,
+                        "quantity": 3,
+                        "total": 22.47
                       },
                       {
-                        "id": "3",
-                        "product_id": "48",
-                        "quantity": 5
+                        "item_list_id": "181b56d1-96a6-4cb3-98fd-3869159243f0",
+                        "product_id": "54",
+                        "product_name": "PANO PARA LIMPEZA ALKLIN C/ 5UN",
+                        "price": 4.79,
+                        "quantity": 11,
+                        "total": 52.69
                       }
                     ]
                   }

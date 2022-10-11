@@ -50,7 +50,7 @@ export class OrdersController {
       for (let j = 0; j < order.items_list_id.length; j++) {
         const orderItem = await this.itemsListService.findOneById(
           order.items_list_id[j],
-        );
+          );
         const itemList = await this.productsService.findOneById(
           orderItem.product_id,
         );

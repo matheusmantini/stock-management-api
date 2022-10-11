@@ -8,7 +8,7 @@ import { ItemsListService } from './items-list.service';
 export class ItemsListController {
   constructor(
     private readonly itemsListService: ItemsListService,
-    private readonly productsService: ProductsService,
+    private readonly productsService: ProductsService
   ) {}
 
   @Post()
@@ -29,8 +29,16 @@ export class ItemsListController {
   }
 
   @Get()
-  findAll() {
-    return this.itemsListService.findAll();
+  async findAll() {
+    const newAllItems = [];
+    const allItems = await this.itemsListService.findAll();
+
+    for (let i = 0; i < allItems.length; i++) {
+      const newItem = await this.findOne(allItems[i].id);
+      newAllItems.push(newItem);      
+    }
+    
+    return newAllItems;
   }
 
   @Get(':id')
