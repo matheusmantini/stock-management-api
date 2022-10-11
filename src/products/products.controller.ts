@@ -12,6 +12,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { UpdateProductQuantityDto } from './dto/update-product.dto copy';
 
 @Controller('products')
 export class ProductsController {
@@ -63,15 +64,20 @@ export class ProductsController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateProductDto: UpdateProductDto,
+    @Body() updateProductQuantityDto: UpdateProductQuantityDto,
   ) {
     const product = await this.productsService.findOneById(id);
-
+    
     if (!product) {
       throw new NotFoundException(`product with id '${id}' not found`);
     }
+    const newStockQuantity = product.qty_stock - updateProductQuantityDto.quantity;
 
-    return this.productsService.update(id, updateProductDto);
+    if(newStockQuantity <= 0){
+      throw new BadRequestException(`A quantidade em estoque do produto informado é igual a 0.`);
+    }
+
+    return this.productsService.update(id, {qty_stock: newStockQuantity});
   }
 
   @Delete(':id')

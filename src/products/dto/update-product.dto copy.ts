@@ -1,6 +1,6 @@
 import { IsNumber } from 'class-validator';
 
-export class UpdateProductDto {
+export class UpdateProductQuantityDto {
   @IsNumber()
-  qty_stock: number;
+  quantity: number;
 }

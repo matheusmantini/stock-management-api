@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsDateString, IsNumber } from 'class-validator';
 
 export class CreateOrderDto {
   @IsString()
@@ -11,4 +11,6 @@ export class CreateOrderDto {
 
   @IsNotEmpty()
   items_list_id: string[];
+
+  total_amount: number;
 }
