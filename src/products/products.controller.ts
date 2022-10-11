@@ -74,7 +74,7 @@ export class ProductsController {
     const newStockQuantity = product.qty_stock - updateProductQuantityDto.quantity;
 
     if(newStockQuantity <= 0){
-      throw new BadRequestException(`A quantidade em estoque do produto informado é igual a 0.`);
+      throw new BadRequestException(`This product has stock quantity unavailable.`);
     }
 
     return this.productsService.update(id, {qty_stock: newStockQuantity});

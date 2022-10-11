@@ -163,7 +163,7 @@
         }
       },
       "patch": {
-        "summary": "Altera algum atributo do produto de acordo com o ID informado",
+        "summary": "Diminui a quantidade em estoque do produto de ID informado com a quantidade informada no body desta requisição",
         "tags": ["PRODUTOS"],
         "parameters": [
           {
@@ -185,9 +185,7 @@
                 "Register": {
                   "summary": "Altera um produto",
                   "value": {
-                    "name": "Água Mineral",
-                    "price": 3.45,
-                    "qty_stock": 25
+                    "quantity": 3
                   }
                 }
               }
@@ -201,12 +199,29 @@
               "application/json": {
                 "examples": {
                   "Register": {
-                    "summary": "Retorna o produto com a alteração",
+                    "summary": "Retorna o produto com a quantidade alterada",
                     "value": {
-                      "id": "16",
-                      "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                      "price": 20.49,
-                      "qty_stock": 158
+                      "id": "96",
+                      "name": "ÁGUA MINERAL SEM GÁS CRYSTAL PET 1,5L",
+                      "price": 2.59,
+                      "qty_stock": 170
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "É retornado quando a quantidade em estoque do produto é 0",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 400,
+                      "message": "This product has stock quantity unavailable.",
+                      "error": "Bad Request"
                     }
                   }
                 }
