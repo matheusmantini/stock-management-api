@@ -37,19 +37,12 @@ export class ProductsController {
   @Get()
   async findAll() {
     const allProducts = await this.productsService.findAll();
-    return allProducts.sort((a, b) => {
-      let fa = a.name.toLowerCase(),
-          fb = b.name.toLowerCase();
-          
-      if (fa.localeCompare(fb) < fb.localeCompare(fa)) {
-          return -1;
-      }
-      if (fa.localeCompare(fb) > fb.localeCompare(fa)) {
-          return 1;
-      }
-      return 0;
-  })
-  }    
+    return allProducts.sort((currentProduct, nextProduct) => {
+      return ('' + currentProduct.name.toLowerCase()).localeCompare(
+        nextProduct.name.toLowerCase(),
+      );
+    });
+  }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -79,17 +72,20 @@ export class ProductsController {
     @Body() updateProductQuantityDto: UpdateProductQuantityDto,
   ) {
     const product = await this.productsService.findOneById(id);
-    
+
     if (!product) {
       throw new NotFoundException(`product with id '${id}' not found`);
     }
-    const newStockQuantity = product.qty_stock - updateProductQuantityDto.quantity;
+    const newStockQuantity =
+      product.qty_stock - updateProductQuantityDto.quantity;
 
-    if(newStockQuantity <= 0){
-      throw new BadRequestException(`This product has stock quantity unavailable.`);
+    if (newStockQuantity <= 0) {
+      throw new BadRequestException(
+        `This product has stock quantity unavailable.`,
+      );
     }
 
-    return this.productsService.update(id, {qty_stock: newStockQuantity});
+    return this.productsService.update(id, { qty_stock: newStockQuantity });
   }
 
   @Delete(':id')
