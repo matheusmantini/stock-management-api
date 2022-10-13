@@ -11,8 +11,7 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { UpdateProductQuantityDto } from './dto/update-product.dto copy';
+import { UpdateProductQuantityDto } from './dto/update-product-quantity.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -85,7 +84,7 @@ export class ProductsController {
       );
     }
 
-    return this.productsService.update(id, { qty_stock: newStockQuantity });
+    return this.productsService.update({ id, qty_stock: newStockQuantity });
   }
 
   @Delete(':id')

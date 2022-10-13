@@ -27,10 +27,10 @@ export class ProductsService {
     return this.prisma.products.findMany({ where: { qty_stock: { lt: 1 } } });
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
+  update(updateProductDto: UpdateProductDto) {
     return this.prisma.products.update({
-      where: { id },
-      data: updateProductDto,
+      where: { id: updateProductDto.id },
+      data: updateProductDto.qty_stock,
     });
   }
 
