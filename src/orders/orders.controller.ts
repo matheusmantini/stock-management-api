@@ -25,8 +25,9 @@ export class OrdersController {
   async create(@Body() createOrderDto: CreateOrderDto) {
     let totalAmountOrder = 0;
     for (let i = 0; i < createOrderDto.items_list_id.length; i++) {
-
-      const orderItem = await this.itemsListService.findOneById(createOrderDto.items_list_id[i]);
+      const orderItem = await this.itemsListService.findOneById(
+        createOrderDto.items_list_id[i],
+      );
 
       if (!orderItem) {
         throw new NotFoundException(
@@ -46,11 +47,11 @@ export class OrdersController {
   @Get()
   async findAll() {
     const showAllOrders = await this.ordersService.findAll();
-    let allOrders = [];
+    const allOrders = [];
 
     for (let i = 0; i < showAllOrders.length; i++) {
       const order = showAllOrders[i];
-      let shoppingList = [];
+      const shoppingList = [];
       let totalAmount = 0;
 
       for (let j = 0; j < order.items_list_id.length; j++) {
@@ -58,7 +59,7 @@ export class OrdersController {
           order.items_list_id[j],
         );
         const itemList = await this.productsService.findOneById(
-          orderItem?.product_id,
+          orderItem.product_id,
         );
         if (order.items_list_id.includes(orderItem.id)) {
           const shoppingItem = {
