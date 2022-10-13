@@ -80,11 +80,11 @@ export class ProductsController {
 
     if (newStockQuantity <= 0) {
       throw new BadRequestException(
-        `This product has stock quantity unavailable.`,
+        `A quantidade em estoque do produto informado é igual a 0.`,
       );
     }
 
-    return this.productsService.update({ id, qty_stock: newStockQuantity });
+    return this.productsService.update(id, { qty_stock: newStockQuantity });
   }
 
   @Delete(':id')
