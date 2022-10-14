@@ -36,7 +36,7 @@
 - [x] Deletar item de pedido
 
 ## Documentação da API com Swagger: :page_facing_up:	
-http://localhost:3000/api
+http://localhost:3001/api
 
 ## Como rodar a aplicação:
   ### Fazer uma cópia deste repositório:
