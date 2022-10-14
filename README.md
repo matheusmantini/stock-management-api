@@ -50,7 +50,7 @@ http://localhost:3001/api
   2) npx prisma generate
   3) npx prisma db seed
   
-  ### Iniciar o servidor:
+  ### Inicializar o servidor:
   - npm run start
 
 ## Desenvolvedor
