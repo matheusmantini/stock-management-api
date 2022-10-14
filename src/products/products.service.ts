@@ -23,10 +23,6 @@ export class ProductsService {
     return this.prisma.products.findMany({ where: { name } });
   }
 
-  findProductsWithoutStock() {
-    return this.prisma.products.findMany({ where: { qty_stock: { lt: 1 } } });
-  }
-
   update(id: string, updateProductDto: UpdateProductDto) {
     return this.prisma.products.update({
       where: { id },

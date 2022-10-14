@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Shopper System",
-    "description": "Sistema de cadastro de produtos e pedidos de supermercado.",
+    "description": "Sistema de cadastro de pedidos de supermercado com gestão de produtos e estoque.",
     "version": "1.0.0"
   },
   "paths": {
@@ -289,57 +289,6 @@
                     "value": {
                       "statusCode": 404,
                       "message": "product with id '101' not found",
-                      "error": "Not Found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/products/stock/unavailable": {
-      "get": {
-        "summary": "Retorna uma lista com os produtos sem estoque",
-        "tags": ["PRODUTOS"],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Register": {
-                    "summary": "Retorna produtos sem estoque",
-                    "value": [
-                      {
-                        "id": "7fc62fc5-79aa-4e54-91ca-2e4cd75b4abd",
-                        "name": "ÁGUA MINERAL COM GÁS 500ml",
-                        "price": 3.45,
-                        "qty_stock": 0
-                      },
-                      {
-                        "id": "9c4f0a5b-7696-499e-ba96-33adf30b897f",
-                        "name": "DESODORANTE AEROSOL SEM PERFUME 120ML",
-                        "price": 11.57,
-                        "qty_stock": 0
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "É retornado quando um produto não é encontrado",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Error": {
-                    "summary": "Error",
-                    "value": {
-                      "statusCode": 404,
-                      "message": "There is no product with stock unavailable",
                       "error": "Not Found"
                     }
                   }

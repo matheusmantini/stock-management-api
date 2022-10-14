@@ -54,17 +54,6 @@ export class ProductsController {
     return product;
   }
 
-  @Get('/stock/unavailable')
-  async findProductsWithoutStock() {
-    const products = await this.productsService.findProductsWithoutStock();
-
-    if (products.length === 0) {
-      throw new NotFoundException('There is no product with stock unavailable');
-    }
-
-    return products;
-  }
-
   @Patch(':id')
   async update(
     @Param('id') id: string,
