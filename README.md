@@ -1,4 +1,4 @@
-<h1 align="center"> Projeto Stock Management System </h1>
+<h1 align="center"> Projeto Stock Management System - Back-end </h1>
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
