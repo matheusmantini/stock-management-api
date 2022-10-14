@@ -39,19 +39,31 @@
 http://localhost:3001/api
 
 ## Como rodar a aplicação:
-  ### Fazer uma cópia deste repositório:
-  1) Abrir o terminal
-  2) git clone https://github.com/matheusmantini/stock-management-api.git
-  3) cd stock-management-api
-  4) npm install
-  
-  ### Configurar o banco de dados:
-  1) Alterar o arquivo '.env' com as informações do seu banco de dados
-  2) npx prisma generate
-  3) npx prisma db seed
-  
-  ### Inicializar o servidor:
-  - npm run start
+
+1. No terminal, clone o projeto:
+> git clone https://github.com/matheusmantini/stock-management-api.git
+
+2. Entre na pasta do projeto:
+> cd stock-management-api
+
+3. Instale as dependências:
+> npm install
+
+4. Altere o arquivo '.env. com as informações do seu banco de dados
+
+5. Gere o prisma client:
+> npx prisma generate
+
+6. Faça a migração das tabelas para o seu banco de dados
+> npx prisma migrate dev
+
+7. Popule o banco de dados com os produtos já cadastrados como exemplo 
+> npx prisma db seed
+
+8. Execute a aplicação:
+> npm run start
+
+9. Pronto, agora é possível acessar a aplicação a partir da rota http://localhost:3000/
 
 ## Desenvolvedor
 
