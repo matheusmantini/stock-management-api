@@ -35,8 +35,8 @@
 - [x] Editar as informações de um item de pedido específico pelo id
 - [x] Deletar item de pedido
 
-## Documentação da API com Swagger: :page_facing_up:	
-http://localhost:3001/api
+## Deploy no Heroku:
+> https://shopper-stock-management.herokuapp.com/api/
 
 ## Como rodar a aplicação:
 
@@ -63,7 +63,7 @@ http://localhost:3001/api
 8. Execute a aplicação:
 > npm run start
 
-9. Pronto, agora é possível acessar a aplicação a partir da rota http://localhost:3000/
+9. Pronto, agora é possível acessar a aplicação a partir da rota http://localhost:3001/api
 
 ## Desenvolvedor
 
