@@ -5,8 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Products } from '@prisma/client';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductQuantityDto } from './dto/update-product-quantity.dto';
+import { CreateProductDto, UpdateProductQuantityDto } from './dto';
 import { ProductsRepository } from './product.repository';
 
 @Injectable()
