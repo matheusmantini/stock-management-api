@@ -2,16 +2,12 @@ import {
   Controller,
   Get,
   Param,
-  NotFoundException,
   Post,
   Body,
-  BadRequestException,
   Patch,
   Delete,
 } from '@nestjs/common';
-import { ProductsService } from 'src/products/products.service';
-import { CreateItemListDto } from './dto/create-item-list.dto';
-import { UpdateItemListDto } from './dto/update-item-list.dto';
+import { CreateItemListDto, UpdateItemListDto } from './dto';
 import { ItemsListService } from './items-list.service';
 
 @Controller('items-list')
