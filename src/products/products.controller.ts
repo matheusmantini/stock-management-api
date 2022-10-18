@@ -6,13 +6,10 @@ import {
   Patch,
   Param,
   Delete,
-  NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductQuantityDto } from './dto/update-product-quantity.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -20,51 +17,29 @@ export class ProductsController {
 
   @Get()
   async getProducts() {
-    const allProducts = await this.productsService.getProducts();
-    return allProducts.sort((currentProduct, nextProduct) => {
-      return ('' + currentProduct.name.toLowerCase()).localeCompare(
-        nextProduct.name.toLowerCase(),
-      );
-    });
+    return this.productsService.getProducts();
   }
 
   @Get(':id')
-  async getUniqueProductById(@Param('id') id: string) {
-    const product = await this.productsService.getUniqueProductById(id);
-
-    if (!product) {
-      throw new NotFoundException(`product with id '${id}' not found`);
-    }
-
-    return product;
+  async getUniqueProductById(id: string) {
+    return this.productsService.getUniqueProductById(id);
   }
 
   @Post()
-  async createProduct(@Body() input: CreateProductDto) {
-    if (input.price <= 0 || input.qty_stock <= 0) {
-      throw new BadRequestException(
-        'Price and quantity in stock must be higher than 0',
-      );
-    }
-
-    return this.productsService.createProduct(input);
+  async createProduct(@Body() body: CreateProductDto) {
+    return this.productsService.createProduct(body);
   }
 
   @Patch(':id')
   async updateProduct(
     @Param('id') id: string,
-    @Body() input: UpdateProductQuantityDto,
+    @Body() body: UpdateProductQuantityDto,
   ) {
-    return this.productsService.updateProduct(id, input);
+    return this.productsService.updateProduct(id, body);
   }
 
   @Delete(':id')
   async deleteProduct(@Param('id') id: string) {
-    const product = await this.productsService.getUniqueProductById(id);
-    if (!product) {
-      throw new NotFoundException(`product with id '${id}' not found`);
-    }
-
     return this.productsService.delete(id);
   }
 }
