@@ -28,7 +28,7 @@ model Products {
 
 model ItemList {
   id         String   @id @default(uuid())
-  product    Products @relation(fields: [product_id], references: [id])
+  product    Products? @relation(fields: [product_id], references: [id])
   product_id String
   quantity   Int
 }

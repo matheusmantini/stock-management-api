@@ -16,7 +16,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  async getProducts() {
+  getProducts() {
     return this.productsService.getProducts();
   }
 

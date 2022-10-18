@@ -10,18 +10,18 @@ export class ProductsRepository {
     return this.prismaService.products.findMany();
   }
 
-  findByUnique(input: Prisma.ProductsWhereUniqueInput) {
-    return this.prismaService.products.findUnique({ where: input });
+  findByUnique(product: Prisma.ProductsWhereUniqueInput) {
+    return this.prismaService.products.findUnique({ where: product });
   }
 
-  create(input: Prisma.ProductsCreateInput) {
-    return this.prismaService.products.create({ data: input });
+  create(product: Prisma.ProductsCreateInput) {
+    return this.prismaService.products.create({ data: product });
   }
 
-  update(id: string, input: Prisma.ProductsUpdateInput) {
+  update(id: string, product: Prisma.ProductsUpdateInput) {
     return this.prismaService.products.update({
       where: { id },
-      data: input,
+      data: product,
     });
   }
 

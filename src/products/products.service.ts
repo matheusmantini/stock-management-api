@@ -57,16 +57,16 @@ export class ProductsService {
     }
   }
 
-  async createProduct(input: CreateProductDto): Promise<Products> {
-    const product = await this.productsRepository.findByUnique({
-      name: input.name,
+  async createProduct(product: CreateProductDto): Promise<Products> {
+    const uniqueProduct = await this.productsRepository.findByUnique({
+      name: product.name,
     });
 
-    if (product) {
+    if (uniqueProduct) {
       throw new ConflictException('Name already exists');
     }
 
-    if (input.price <= 0 || input.qty_stock <= 0) {
+    if (product.price <= 0 || product.qty_stock <= 0) {
       throw new BadRequestException(
         'Price and quantity in stock must be higher than 0',
       );
@@ -74,7 +74,7 @@ export class ProductsService {
 
     try {
       // Retorna o produto criado
-      return this.productsRepository.create(input);
+      return this.productsRepository.create(product);
     } catch {
       throw new InternalServerErrorException();
     }
@@ -82,17 +82,17 @@ export class ProductsService {
 
   async updateProduct(
     id: string,
-    input: UpdateProductQuantityDto,
+    product: UpdateProductQuantityDto,
   ): Promise<Products> {
-    const product = await this.productsRepository.findByUnique({
+    const uniqueProduct = await this.productsRepository.findByUnique({
       id,
     });
 
-    if (!product) {
+    if (!uniqueProduct) {
       throw new NotFoundException(`Product not found by id ${id}`);
     }
 
-    const newStockQuantity = product.qty_stock - input.quantity;
+    const newStockQuantity = uniqueProduct.qty_stock - product.quantity;
 
     if (newStockQuantity < 0) {
       throw new ConflictException(
@@ -111,11 +111,11 @@ export class ProductsService {
   }
 
   async delete(id: string): Promise<Products> {
-    const product = await this.productsRepository.findByUnique({
+    const uniqueProduct = await this.productsRepository.findByUnique({
       id,
     });
 
-    if (!product) {
+    if (!uniqueProduct) {
       throw new NotFoundException(`Product not found by id ${id}`);
     }
 

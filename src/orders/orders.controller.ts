@@ -25,7 +25,7 @@ export class OrdersController {
   async create(@Body() createOrderDto: CreateOrderDto) {
     let totalAmountOrder = 0;
     for (let i = 0; i < createOrderDto.items_list_id.length; i++) {
-      const orderItem = await this.itemsListService.findOneById(
+      const orderItem = await this.itemsListService.getUniqueItemsListById(
         createOrderDto.items_list_id[i],
       );
 
@@ -55,13 +55,13 @@ export class OrdersController {
       let totalAmount = 0;
 
       for (let j = 0; j < order.items_list_id.length; j++) {
-        const orderItem = await this.itemsListService.findOneById(
+        const orderItem = await this.itemsListService.getUniqueItemsListById(
           order.items_list_id[j],
         );
         const itemList = await this.productsService.getUniqueProductById(
           orderItem.product_id,
         );
-        if (order.items_list_id.includes(orderItem.id)) {
+        if (order.items_list_id.includes(orderItem.item_list_id)) {
           const shoppingItem = {
             product: itemList.name,
             quantity: orderItem.quantity,
