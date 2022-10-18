@@ -12,30 +12,15 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductQuantityDto } from './dto/update-product-quantity.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
-  async create(@Body() createProductDto: CreateProductDto) {
-    if (createProductDto.price <= 0 || createProductDto.qty_stock <= 0) {
-      throw new BadRequestException(
-        'Price and quantity in stock must be higher than 0',
-      );
-    }
-    const product = await this.productsService.findOneByName(
-      createProductDto.name,
-    );
-    if (product.length !== 0) {
-      throw new BadRequestException('Name already exists');
-    }
-    return await this.productsService.create(createProductDto);
-  }
-
   @Get()
-  async findAll() {
-    const allProducts = await this.productsService.findAll();
+  async getProducts() {
+    const allProducts = await this.productsService.getProducts();
     return allProducts.sort((currentProduct, nextProduct) => {
       return ('' + currentProduct.name.toLowerCase()).localeCompare(
         nextProduct.name.toLowerCase(),
@@ -44,8 +29,8 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const product = await this.productsService.findOneById(id);
+  async getUniqueProductById(@Param('id') id: string) {
+    const product = await this.productsService.getUniqueProductById(id);
 
     if (!product) {
       throw new NotFoundException(`product with id '${id}' not found`);
@@ -54,35 +39,32 @@ export class ProductsController {
     return product;
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateProductQuantityDto: UpdateProductQuantityDto,
-  ) {
-    const product = await this.productsService.findOneById(id);
-
-    if (!product) {
-      throw new NotFoundException(`product with id '${id}' not found`);
-    }
-    const newStockQuantity =
-      product.qty_stock - updateProductQuantityDto.quantity;
-
-    if (newStockQuantity < 0) {
+  @Post()
+  async createProduct(@Body() input: CreateProductDto) {
+    if (input.price <= 0 || input.qty_stock <= 0) {
       throw new BadRequestException(
-        `A quantidade em estoque do produto informado é igual a 0.`,
+        'Price and quantity in stock must be higher than 0',
       );
     }
 
-    return this.productsService.update(id, { qty_stock: newStockQuantity });
+    return this.productsService.createProduct(input);
+  }
+
+  @Patch(':id')
+  async updateProduct(
+    @Param('id') id: string,
+    @Body() input: UpdateProductQuantityDto,
+  ) {
+    return this.productsService.updateProduct(id, input);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    const product = await this.productsService.findOneById(id);
+  async deleteProduct(@Param('id') id: string) {
+    const product = await this.productsService.getUniqueProductById(id);
     if (!product) {
       throw new NotFoundException(`product with id '${id}' not found`);
     }
 
-    return this.productsService.remove(id);
+    return this.productsService.delete(id);
   }
 }

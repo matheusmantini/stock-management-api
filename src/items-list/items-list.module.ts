@@ -4,10 +4,11 @@ import { ItemsListController } from './items-list.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { ProductsService } from 'src/products/products.service';
 import { ProductsModule } from 'src/products/products.module';
+import { ProductsRepository } from 'src/products/product.repository';
 
 @Module({
   controllers: [ItemsListController],
-  providers: [ItemsListService, ProductsService],
+  providers: [ItemsListService, ProductsService, ProductsRepository],
   imports: [PrismaModule, ProductsModule],
 })
 export class ItemsListModule {}

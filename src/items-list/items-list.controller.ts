@@ -1,4 +1,14 @@
-import { Controller, Get, Param, NotFoundException, Post, Body, BadRequestException, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  NotFoundException,
+  Post,
+  Body,
+  BadRequestException,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { ProductsService } from 'src/products/products.service';
 import { CreateItemListDto } from './dto/create-item-list.dto';
 import { UpdateItemListDto } from './dto/update-item-list.dto';
@@ -8,12 +18,12 @@ import { ItemsListService } from './items-list.service';
 export class ItemsListController {
   constructor(
     private readonly itemsListService: ItemsListService,
-    private readonly productsService: ProductsService
+    private readonly productsService: ProductsService,
   ) {}
 
   @Post()
   async create(@Body() createItemListDto: CreateItemListDto) {
-    const product = await this.productsService.findOneById(
+    const product = await this.productsService.getUniqueProductById(
       createItemListDto.product_id,
     );
     if (!product) {
@@ -35,16 +45,16 @@ export class ItemsListController {
 
     for (let i = 0; i < allItems.length; i++) {
       const newItem = await this.findOne(allItems[i].id);
-      newAllItems.push(newItem);      
+      newAllItems.push(newItem);
     }
-    
+
     return newAllItems;
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const orderItem = await this.itemsListService.findOneById(id);
-    const itemList = await this.productsService.findOneById(
+    const itemList = await this.productsService.getUniqueProductById(
       orderItem.product_id,
     );
 
@@ -75,7 +85,7 @@ export class ItemsListController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const listItem = await this.itemsListService.findOneById(id);
-    
+
     if (!listItem) {
       throw new NotFoundException(`list item with id '${id}' not found`);
     }
