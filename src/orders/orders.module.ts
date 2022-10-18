@@ -6,11 +6,13 @@ import { ItemsListService } from 'src/items-list/items-list.service';
 import { ProductsService } from 'src/products/products.service';
 import { ProductsRepository } from 'src/products/product.repository';
 import { ItemsListRepository } from 'src/items-list/items-list.repository';
+import { OrdersRepository } from './orders.repository';
 
 @Module({
   controllers: [OrdersController],
   providers: [
     OrdersService,
+    OrdersRepository,
     ItemsListService,
     ItemsListRepository,
     ProductsService,

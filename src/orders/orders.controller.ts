@@ -1,97 +1,27 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  NotFoundException,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { ItemsListService } from 'src/items-list/items-list.service';
-import { ProductsService } from 'src/products/products.service';
-
+import { CreateOrderDto, UpdateOrderDto } from './dto';
 @Controller('orders')
 export class OrdersController {
-  constructor(
-    private readonly ordersService: OrdersService,
-    private itemsListService: ItemsListService,
-    private productsService: ProductsService,
-  ) {}
-
-  @Post()
-  async create(@Body() createOrderDto: CreateOrderDto) {
-    let totalAmountOrder = 0;
-    for (let i = 0; i < createOrderDto.items_list_id.length; i++) {
-      const orderItem = await this.itemsListService.getUniqueItemsListById(
-        createOrderDto.items_list_id[i],
-      );
-
-      if (!orderItem) {
-        throw new NotFoundException(
-          `item not found with id ${createOrderDto.items_list_id[i]}`,
-        );
-      }
-
-      const itemList = await this.productsService.getUniqueProductById(
-        orderItem.product_id,
-      );
-      totalAmountOrder += itemList.price * orderItem.quantity;
-    }
-    createOrderDto.total_amount = totalAmountOrder;
-    return this.ordersService.create(createOrderDto);
-  }
+  constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
-  async findAll() {
-    const showAllOrders = await this.ordersService.findAll();
-    const allOrders = [];
-
-    for (let i = 0; i < showAllOrders.length; i++) {
-      const order = showAllOrders[i];
-      const shoppingList = [];
-      let totalAmount = 0;
-
-      for (let j = 0; j < order.items_list_id.length; j++) {
-        const orderItem = await this.itemsListService.getUniqueItemsListById(
-          order.items_list_id[j],
-        );
-        const itemList = await this.productsService.getUniqueProductById(
-          orderItem.product_id,
-        );
-        if (order.items_list_id.includes(orderItem.item_list_id)) {
-          const shoppingItem = {
-            product: itemList.name,
-            quantity: orderItem.quantity,
-            price: itemList.price,
-          };
-          shoppingList.push(shoppingItem);
-          totalAmount += orderItem.quantity * itemList.price;
-        }
-      }
-
-      const newOrder = {
-        id: order.id,
-        client_name: order.client_name,
-        delivery_date: order.delivery_date,
-        shopping_list: shoppingList,
-        total_amount: totalAmount,
-      };
-
-      allOrders.push(newOrder);
-    }
-    return allOrders;
+  async getOrders() {
+    return this.ordersService.getOrders();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(id);
+  getUniqueOrderById(@Param('id') id: string) {
+    return this.ordersService.getUniqueOrderById(id);
+  }
+
+  @Post()
+  async createOrder(@Body() order: CreateOrderDto) {
+    return this.ordersService.createOrder(order);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(id, updateOrderDto);
+  updateOrder(@Param('id') id: string, @Body() order: UpdateOrderDto) {
+    return this.ordersService.updateOrder(id, order);
   }
 }
