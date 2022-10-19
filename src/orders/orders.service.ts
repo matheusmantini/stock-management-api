@@ -35,6 +35,7 @@ export class OrdersService {
         );
         if (order.items_list_id.includes(orderItem.item_list_id)) {
           const shoppingItem = {
+            itemListId: orderItem.item_list_id,
             product: itemList.name,
             quantity: orderItem.quantity,
             price: itemList.price,
@@ -62,8 +63,44 @@ export class OrdersService {
     }
   }
 
-  getUniqueOrderById(id: string): Promise<Orders> {
-    return this.ordersRepository.findByUnique({ id });
+  async getUniqueOrderById(id: string): Promise<Orders> {
+    const uniqueOrder = await this.ordersRepository.findByUnique({ id });
+    const shoppingList = [];
+    let totalAmount = 0;
+
+    for (let j = 0; j < uniqueOrder.items_list_id.length; j++) {
+      const orderItem = await this.itemsListService.getUniqueItemsListById(
+        uniqueOrder.items_list_id[j],
+      );
+      const itemList = await this.productsService.getUniqueProductById(
+        orderItem.product_id,
+      );
+      if (uniqueOrder.items_list_id.includes(orderItem.item_list_id)) {
+        const shoppingItem = {
+          itemListId: orderItem.item_list_id,
+          product: itemList.name,
+          quantity: orderItem.quantity,
+          price: itemList.price,
+        };
+        shoppingList.push(shoppingItem);
+        totalAmount += orderItem.quantity * itemList.price;
+      }
+    }
+
+    const newOrder = {
+      id: uniqueOrder.id,
+      client_name: uniqueOrder.client_name,
+      delivery_date: uniqueOrder.delivery_date,
+      shopping_list: shoppingList,
+      total_amount: totalAmount,
+    };
+
+    try {
+      // Retorna um pedido específico de acordo com o ID informado
+      return newOrder;
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   async createOrder(order: CreateOrderDto): Promise<Orders> {
@@ -85,10 +122,20 @@ export class OrdersService {
       totalAmountOrder += itemList.price * orderItem.quantity;
     }
     order.total_amount = totalAmountOrder;
-    return this.ordersRepository.create(order);
+    try {
+      // Retorna o pedido criado
+      return this.ordersRepository.create(order);
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   updateOrder(id: string, order: UpdateOrderDto): Promise<Orders> {
-    return this.ordersRepository.update(id, order);
+    try {
+      // Retorna o pedido alterado
+      return this.ordersRepository.update(id, order);
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 }

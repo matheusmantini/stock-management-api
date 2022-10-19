@@ -383,14 +383,14 @@
                 "examples": {
                   "Create": {
                     "value": {
-                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
-                      "client_name": "João",
-                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
+                      "client_name": "Joana",
+                      "delivery_date": "2022-11-05T12:09:04.374Z",
                       "items_list_id": [
-                        "1",
-                        "2",
-                        "3"
-                      ]
+                        "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
+                        "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
+                      ],
+                      "total_amount": 555.64
                     }
                   }
                 }
@@ -428,27 +428,30 @@
                   "Search All": {
                     "value": [
                       {
-                        "id": "4720c32a-9eee-4b63-8450-e175a536f924",
-                        "client_name": "João",
-                        "delivery_date": "2022-10-05T12:09:04.374Z",
+                        "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
+                        "client_name": "Joana",
+                        "delivery_date": "2022-11-05T12:09:04.374Z",
                         "shopping_list": [
                           {
-                            "product": "COLHER DESCARTÁVEL MASTER PRAFESTA BRANCA C/ 50UN",
-                            "quantity": 3,
-                            "price": 5.99
+                            "itemListId": "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
+                            "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                            "quantity": 15,
+                            "price": 20.49
                           },
                           {
-                            "product": "GARFO DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
-                            "quantity": 2,
-                            "price": 7.49
+                            "itemListId": "d3c0291d-0c89-4b3a-a6a3-359f1924ed95",
+                            "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                            "quantity": 11,
+                            "price": 20.49
                           },
                           {
-                            "product": "FACA DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
-                            "quantity": 5,
-                            "price": 8.99
+                            "itemListId": "5e8b4480-5b06-4794-a2fc-c70dc97ad277",
+                            "product": "ÁGUA MINERAL SEM GÁS MINALBA 1,5L",
+                            "quantity": 10,
+                            "price": 2.29
                           }
                         ],
-                        "total_amount": 77.9
+                        "total_amount": 555.64
                       }
                     ]
                   }
@@ -482,14 +485,30 @@
                   "Register": {
                     "summary": "Retorna um pedido específico",
                     "value": {
-                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
-                      "client_name": "João",
-                      "delivery_date": "2022-10-05T12:09:04.374Z",
-                      "items_list_id": [
-                        "1",
-                        "2",
-                        "3"
-                      ]
+                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
+                      "client_name": "Joana",
+                      "delivery_date": "2022-11-05T12:09:04.374Z",
+                      "shopping_list": [
+                        {
+                          "itemListId": "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
+                          "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                          "quantity": 15,
+                          "price": 20.49
+                        },
+                        {
+                          "itemListId": "d3c0291d-0c89-4b3a-a6a3-359f1924ed95",
+                          "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                          "quantity": 11,
+                          "price": 20.49
+                        },
+                        {
+                          "itemListId": "5e8b4480-5b06-4794-a2fc-c70dc97ad277",
+                          "product": "ÁGUA MINERAL SEM GÁS MINALBA 1,5L",
+                          "quantity": 10,
+                          "price": 2.29
+                        }
+                      ],
+                      "total_amount": 555.64
                     }
                   }
                 }
@@ -538,13 +557,14 @@
                 "Register": {
                   "summary": "Altera um pedido",
                   "value": {
-                    "client_name": "João",
-                      "delivery_date": "2022-10-05T12:09:04.374Z",
-                      "items_list_id": [
-                        "1",
-                        "2",
-                        "3"
-                      ]
+                    "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
+                    "client_name": "Joana",
+                    "delivery_date": "2022-11-05T12:09:04.374Z",
+                    "items_list_id": [
+                      "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
+                      "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
+                    ],
+                    "total_amount": 555.64
                   }
                 }
               }
@@ -560,13 +580,14 @@
                   "Register": {
                     "summary": "Mostra o pedido após alteração",
                     "value": {
-                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
-                      "client_name": "João",
-                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
+                      "client_name": "Joana",
+                      "delivery_date": "2022-11-05T12:09:04.374Z",
                       "items_list_id": [
-                        "1",
-                        "3"
-                      ]
+                        "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
+                        "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
+                      ],
+                      "total_amount": 555.64
                     }
                   }
                 }
