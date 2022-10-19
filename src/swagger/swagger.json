@@ -110,6 +110,59 @@
         }
       }
     },
+    "/products/byName/{name}": {
+      "get": {
+        "summary": "Retorna um produto específico de acordo com o nome informado",
+        "tags": ["PRODUTOS"],
+        "parameters": [
+          {
+            "name": "name",
+            "in":"path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Retorna um produto específico",
+                    "value": {
+                      "id": "16",
+                      "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
+                      "price": 20.49,
+                      "qty_stock": 158
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "É retornado quando um produto não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Error": {
+                    "summary": "Error",
+                    "value": {
+                      "statusCode": 404,
+                      "message": "product with name 'AZEITE  PORTUGUÊS EXTRA VIRGEM' not found",
+                      "error": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/products/{id}": {
       "get": {
         "summary": "Retorna um produto específico de acordo com o ID informado",

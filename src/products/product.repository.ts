@@ -10,8 +10,16 @@ export class ProductsRepository {
     return this.prismaService.products.findMany();
   }
 
-  findByUnique(product: Prisma.ProductsWhereUniqueInput) {
-    return this.prismaService.products.findUnique({ where: product });
+  findByUniqueId(id: string) {
+    return this.prismaService.products.findFirst({
+      where: { id },
+    });
+  }
+
+  findByUniqueName(name: string) {
+    return this.prismaService.products.findFirst({
+      where: { name },
+    });
   }
 
   create(product: Prisma.ProductsCreateInput) {

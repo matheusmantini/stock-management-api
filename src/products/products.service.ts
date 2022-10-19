@@ -28,7 +28,7 @@ export class ProductsService {
   }
 
   async getUniqueProductById(id: string): Promise<Products> {
-    const product = await this.productsRepository.findByUnique({ id });
+    const product = await this.productsRepository.findByUniqueId(id);
 
     if (!product) {
       throw new NotFoundException(`product with id '${id}' not found`);
@@ -43,7 +43,7 @@ export class ProductsService {
   }
 
   async getUniqueProductByName(name: string): Promise<Products> {
-    const product = await this.productsRepository.findByUnique({ name });
+    const product = await this.productsRepository.findByUniqueName(name);
 
     if (!product) {
       throw new NotFoundException(`product with name '${name}' not found`);
@@ -58,9 +58,9 @@ export class ProductsService {
   }
 
   async createProduct(product: CreateProductDto): Promise<Products> {
-    const uniqueProduct = await this.productsRepository.findByUnique({
-      name: product.name,
-    });
+    const uniqueProduct = await this.productsRepository.findByUniqueName(
+      product.name,
+    );
 
     if (uniqueProduct) {
       throw new ConflictException('Name already exists');
@@ -84,9 +84,7 @@ export class ProductsService {
     id: string,
     product: UpdateProductQuantityDto,
   ): Promise<Products> {
-    const uniqueProduct = await this.productsRepository.findByUnique({
-      id,
-    });
+    const uniqueProduct = await this.productsRepository.findByUniqueId(id);
 
     if (!uniqueProduct) {
       throw new NotFoundException(`Product not found by id ${id}`);
@@ -111,9 +109,7 @@ export class ProductsService {
   }
 
   async delete(id: string): Promise<Products> {
-    const uniqueProduct = await this.productsRepository.findByUnique({
-      id,
-    });
+    const uniqueProduct = await this.productsRepository.findByUniqueId(id);
 
     if (!uniqueProduct) {
       throw new NotFoundException(`Product not found by id ${id}`);

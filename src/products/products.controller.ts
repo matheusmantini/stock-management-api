@@ -25,6 +25,11 @@ export class ProductsController {
     return this.productsService.getUniqueProductById(id);
   }
 
+  @Get('/byName/:name')
+  async getUniqueProductByName(name: string) {
+    return this.productsService.getUniqueProductByName(name);
+  }
+
   @Post()
   async createProduct(@Body() body: CreateProductDto) {
     return this.productsService.createProduct(body);
