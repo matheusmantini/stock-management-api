@@ -31,21 +31,7 @@
         },
         "responses": {
           "201": {
-            "description": "Produto cadastrado com sucesso!",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Create": {
-                    "value": {
-                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
-                      "name": "Água Mineral",
-                      "price": 3.45,
-                      "qty_stock": 25
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Produto cadastrado com sucesso."
           },
           "400": {
             "description": "É retornado quando já existe um produto cadastrado no sistema com o nome informado",
@@ -315,22 +301,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Register": {
-                    "summary": "Deleta um produto específico",
-                    "value": {
-                      "id": "43e172ac-f044-4599-a756-77c54afdfc33",
-                      "name": "SmartPhone S20FE 2022",
-                      "price": 3500.99,
-                      "qty_stock": 32
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Produto deletado com sucesso"
           },
           "404": {
             "description": "É retornado quando um produto não é encontrado",
@@ -377,25 +348,7 @@
         },
         "responses": {
           "201": {
-            "description": "Pedido cadastrado com sucesso",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Create": {
-                    "value": {
-                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
-                      "client_name": "Joana",
-                      "delivery_date": "2022-11-05T12:09:04.374Z",
-                      "items_list_id": [
-                        "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
-                        "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
-                      ],
-                      "total_amount": 555.64
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Pedido cadastrado com sucesso"
           },
           "404": {
             "description": "É retornado quando um item da lista de ID's não é contrado",
@@ -573,7 +526,7 @@
         },
         "responses": {
           "200": {
-            "description": "Sucesso",
+            "description": "Retorna o pedido após alteração",
             "content": {
               "application/json": {
                 "examples": {
@@ -638,21 +591,7 @@
         },
         "responses": {
           "201": {
-            "description": "Item adicionado na lista de compras com sucesso!",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Create": {
-                    "value": {
-                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
-                      "name": "Água Mineral",
-                      "price": 3.45,
-                      "qty_stock": 25
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Item adicionado com sucesso."
           },
           
           "404": {
@@ -822,7 +761,7 @@
         },
         "responses": {
           "200": {
-            "description": "Sucesso",
+            "description": "Item alterado com sucesso.",
             "content": {
               "application/json": {
                 "examples": {
@@ -872,21 +811,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Register": {
-                    "summary": "Deleta um item de pedido específico",
-                    "value": {
-                      "id": "3",
-                      "product_id": "48",
-                      "quantity": 5
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Item deletado com sucesso"
           },
           "404": {
             "description": "É retornado quando um item de pedido não é encontrado",

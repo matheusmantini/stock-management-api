@@ -20,22 +20,22 @@ export class ItemsListController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) {
     return this.itemsListService.getUniqueItemsListById(id);
   }
 
   @Post()
   async create(@Body() body: CreateItemListDto) {
-    return this.itemsListService.create(body);
+    await this.itemsListService.create(body);
   }
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() body: UpdateItemListDto) {
-    return this.itemsListService.updateQuantity(id, body);
+    await this.itemsListService.updateQuantity(id, body);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.itemsListService.delete(id);
+    await this.itemsListService.delete(id);
   }
 }

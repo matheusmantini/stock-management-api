@@ -56,7 +56,7 @@ export class ItemsListService {
     }
   }
 
-  async create(itemList: CreateItemListDto): Promise<ItemList> {
+  async create(itemList: CreateItemListDto) {
     const uniqueProduct = await this.productsService.getUniqueProductById(
       itemList.product_id,
     );
@@ -73,16 +73,13 @@ export class ItemsListService {
 
     try {
       // Retorna o itemList criado
-      return this.itemsListRepository.create(itemList);
+      await this.itemsListRepository.create(itemList);
     } catch {
       throw new InternalServerErrorException();
     }
   }
 
-  async updateQuantity(
-    id: string,
-    itemList: UpdateItemListDto,
-  ): Promise<ItemList> {
+  async updateQuantity(id: string, itemList: UpdateItemListDto) {
     const uniqueItemList = await this.itemsListRepository.findByUnique({ id });
 
     if (!uniqueItemList) {
@@ -91,7 +88,7 @@ export class ItemsListService {
 
     try {
       // Retorna o itemList atualizado
-      return this.itemsListRepository.updateQuantity(id, itemList);
+      await this.itemsListRepository.updateQuantity(id, itemList);
     } catch {
       throw new InternalServerErrorException();
     }
@@ -106,7 +103,7 @@ export class ItemsListService {
 
     try {
       // Retorna o itemList deletado
-      return this.itemsListRepository.delete(id);
+      await this.itemsListRepository.delete(id);
     } catch {
       throw new InternalServerErrorException();
     }

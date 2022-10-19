@@ -103,7 +103,7 @@ export class OrdersService {
     }
   }
 
-  async createOrder(order: CreateOrderDto): Promise<Orders> {
+  async createOrder(order: CreateOrderDto) {
     let totalAmountOrder = 0;
     for (let i = 0; i < order.items_list_id.length; i++) {
       const orderItem = await this.itemsListService.getUniqueItemsListById(
@@ -124,7 +124,7 @@ export class OrdersService {
     order.total_amount = totalAmountOrder;
     try {
       // Retorna o pedido criado
-      return this.ordersRepository.create(order);
+      await this.ordersRepository.create(order);
     } catch {
       throw new InternalServerErrorException();
     }

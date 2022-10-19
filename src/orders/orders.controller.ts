@@ -17,7 +17,7 @@ export class OrdersController {
 
   @Post()
   async createOrder(@Body() order: CreateOrderDto) {
-    return this.ordersService.createOrder(order);
+    await this.ordersService.createOrder(order);
   }
 
   @Patch(':id')

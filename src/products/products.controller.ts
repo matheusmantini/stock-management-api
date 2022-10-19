@@ -32,7 +32,7 @@ export class ProductsController {
 
   @Post()
   async createProduct(@Body() body: CreateProductDto) {
-    return this.productsService.createProduct(body);
+    await this.productsService.createProduct(body);
   }
 
   @Patch(':id')
@@ -45,6 +45,6 @@ export class ProductsController {
 
   @Delete(':id')
   async deleteProduct(@Param('id') id: string) {
-    return this.productsService.delete(id);
+    await this.productsService.delete(id);
   }
 }

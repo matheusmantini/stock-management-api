@@ -57,7 +57,7 @@ export class ProductsService {
     }
   }
 
-  async createProduct(product: CreateProductDto): Promise<Products> {
+  async createProduct(product: CreateProductDto) {
     const uniqueProduct = await this.productsRepository.findByUniqueName(
       product.name,
     );
@@ -74,7 +74,7 @@ export class ProductsService {
 
     try {
       // Retorna o produto criado
-      return this.productsRepository.create(product);
+      await this.productsRepository.create(product);
     } catch {
       throw new InternalServerErrorException();
     }
@@ -108,7 +108,7 @@ export class ProductsService {
     }
   }
 
-  async delete(id: string): Promise<Products> {
+  async delete(id: string) {
     const uniqueProduct = await this.productsRepository.findByUniqueId(id);
 
     if (!uniqueProduct) {
@@ -117,7 +117,7 @@ export class ProductsService {
 
     try {
       // Retorna o produto deletado
-      return this.productsRepository.delete(id);
+      await this.productsRepository.delete(id);
     } catch {
       throw new InternalServerErrorException();
     }
