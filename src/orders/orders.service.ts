@@ -63,7 +63,7 @@ export class OrdersService {
     }
   }
 
-  async getUniqueOrderById(id: string): Promise<Orders> {
+  async getUniqueOrderById(id: string): Promise<Partial<Orders>> {
     const uniqueOrder = await this.ordersRepository.findByUnique({ id });
     const shoppingList = [];
     let totalAmount = 0;

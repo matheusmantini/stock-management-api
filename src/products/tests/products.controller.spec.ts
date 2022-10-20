@@ -150,7 +150,7 @@ describe('ProductsController', () => {
   });
 
   describe('updateProduct', () => {
-    it('should create a new product successfully', async () => {
+    it('should update a product successfully', async () => {
       // Arrange
       const body = {
         quantity: 1,
@@ -180,7 +180,7 @@ describe('ProductsController', () => {
   });
 
   describe('delete', () => {
-    it('should create a new product successfully', async () => {
+    it('should delete a product successfully', async () => {
       // Act
       const result = await productsController.deleteProduct('1');
 

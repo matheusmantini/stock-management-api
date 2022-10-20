@@ -88,7 +88,7 @@ export class ItemsListService {
 
     try {
       // Retorna o itemList atualizado
-      await this.itemsListRepository.updateQuantity(id, itemList);
+      return await this.itemsListRepository.updateQuantity(id, itemList);
     } catch {
       throw new InternalServerErrorException();
     }

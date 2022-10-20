@@ -31,7 +31,7 @@ export class ItemsListController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() body: UpdateItemListDto) {
-    await this.itemsListService.updateQuantity(id, body);
+    return await this.itemsListService.updateQuantity(id, body);
   }
 
   @Delete(':id')
