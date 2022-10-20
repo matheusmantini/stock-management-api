@@ -225,6 +225,13 @@ describe('ProductsService', () => {
       expect(productsService.updateProduct('1', body)).rejects.toThrowError();
     });
 
+    it('should throw an exception if new stock quantity is less or equals to 0', () => {
+      // Assert
+      expect(() => {
+        productsService.handleNewQuantity(1, 2);
+      }).toThrow('The stock quantity of this product is equals to 0.');
+    });
+
     it("should throw an exception if it didn't work at all", () => {
       // Arrange
       const body = {
