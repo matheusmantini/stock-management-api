@@ -5,7 +5,7 @@ import {
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsRepository } from '../product.repository';
 import { ProductsService } from '../products.service';
-import { productsEntityList, updatedproductsEntity } from './__mocks__';
+import { productsEntityList, updatedProductsEntity } from './__mocks__';
 
 describe('ProductsService', () => {
   let productsService: ProductsService;
@@ -24,7 +24,7 @@ describe('ProductsService', () => {
               .fn()
               .mockResolvedValue(productsEntityList[0]),
             create: jest.fn().mockResolvedValue(undefined),
-            update: jest.fn().mockResolvedValue(updatedproductsEntity),
+            update: jest.fn().mockResolvedValue(updatedProductsEntity),
             delete: jest.fn().mockResolvedValue(undefined),
           },
         },
@@ -210,7 +210,7 @@ describe('ProductsService', () => {
       const result = await productsService.updateProduct('1', body);
 
       // Assert
-      expect(result).toEqual(updatedproductsEntity);
+      expect(result).toEqual(updatedProductsEntity);
     });
 
     it("should throw an exception if there's no product with informed id", () => {

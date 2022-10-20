@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsController } from '../products.controller';
 import { ProductsService } from '../products.service';
-import { productsEntityList, updatedproductsEntity } from './__mocks__';
+import { productsEntityList, updatedProductsEntity } from './__mocks__';
 
 describe('ProductsController', () => {
   let productsController: ProductsController;
@@ -22,7 +22,7 @@ describe('ProductsController', () => {
               .fn()
               .mockResolvedValue(productsEntityList[0]),
             createProduct: jest.fn().mockResolvedValue(undefined),
-            updateProduct: jest.fn().mockResolvedValue(updatedproductsEntity),
+            updateProduct: jest.fn().mockResolvedValue(updatedProductsEntity),
             delete: jest.fn().mockResolvedValue(undefined),
           },
         },
@@ -160,7 +160,7 @@ describe('ProductsController', () => {
       const result = await productsController.updateProduct('1', body);
 
       // Assert
-      expect(result).toEqual(updatedproductsEntity);
+      expect(result).toEqual(updatedProductsEntity);
     });
 
     it('should throw an exception', () => {

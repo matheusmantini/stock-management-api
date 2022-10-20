@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Orders } from '@prisma/client';
-import { ItemsListService } from 'src/items-list/items-list.service';
-import { ProductsService } from 'src/products/products.service';
+import { ItemsListService } from '../items-list/items-list.service';
+import { ProductsService } from '../products/products.service';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrdersRepository } from './orders.repository';
 

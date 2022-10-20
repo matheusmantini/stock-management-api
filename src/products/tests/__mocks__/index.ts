@@ -6,7 +6,7 @@ export const productsEntityList: ProductsEntity[] = [
   { id: '3', name: 'Product 3', price: 3.33, qty_stock: 333 },
 ];
 
-export const updatedproductsEntity = {
+export const updatedProductsEntity = {
   id: '1',
   name: 'Product 1',
   price: 1.11,

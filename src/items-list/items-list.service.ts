@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ItemList } from '@prisma/client';
-import { ProductsService } from 'src/products/products.service';
+import { ProductsService } from '../products/products.service';
 import { CreateItemListDto, UpdateItemListDto } from './dto';
 import { IItemListComplete } from './items-list-complete.structure';
 import { ItemsListRepository } from './items-list.repository';
