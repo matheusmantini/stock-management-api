@@ -1,7 +1,3 @@
-import {
-  ConflictException,
-  InternalServerErrorException,
-} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsRepository } from '../product.repository';
 import { ProductsService } from '../products.service';
@@ -227,9 +223,13 @@ describe('ProductsService', () => {
 
     it('should throw an exception if new stock quantity is less or equals to 0', () => {
       // Assert
-      expect(() => {
+      try {
         productsService.handleNewQuantity(1, 2);
-      }).toThrow('The stock quantity of this product is equals to 0.');
+      } catch (error) {
+        expect(error.message).toEqual(
+          'The stock quantity of this product is equals to 0.',
+        );
+      }
     });
 
     it("should throw an exception if it didn't work at all", () => {
