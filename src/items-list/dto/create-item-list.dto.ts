@@ -12,5 +12,5 @@ export class CreateItemListDto {
   quantity: number;
 
   @Exclude()
-  product: Prisma.ProductsCreateNestedOneWithoutProductItemInput;
+  product?: Prisma.ProductsCreateNestedOneWithoutProductItemInput;
 }

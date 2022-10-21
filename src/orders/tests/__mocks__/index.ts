@@ -27,5 +27,5 @@ export const ordersEntityList: OrdersEntity[] = [
 export const updatedOrderEntity = {
   client_name: 'João',
   delivery_date: new Date('2023-07-05'),
-  items_list_id: ['1', '2', '3']
+  items_list_id: ['1', '2', '3'],
 };

@@ -5,7 +5,7 @@ import { CreateItemListDto } from './create-item-list.dto';
 
 export class UpdateItemListDto extends PartialType(CreateItemListDto) {
   @IsOptional()
-  product_id: string;
+  product_id?: string;
   @IsNumber()
   @IsNotEmpty()
   quantity: number;

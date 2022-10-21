@@ -190,9 +190,7 @@ describe('ProductsController', () => {
 
     it('should throw an exception', () => {
       // Arrange
-      jest
-        .spyOn(productsService, 'delete')
-        .mockRejectedValueOnce(new Error());
+      jest.spyOn(productsService, 'delete').mockRejectedValueOnce(new Error());
 
       // Assert
       expect(productsController.deleteProduct('1')).rejects.toThrowError();

@@ -13,8 +13,8 @@ import { OrdersRepository } from './orders.repository';
 export class OrdersService {
   constructor(
     private readonly ordersRepository: OrdersRepository,
-    private itemsListService: ItemsListService,
-    private productsService: ProductsService,
+    private readonly itemsListService: ItemsListService,
+    private readonly productsService: ProductsService,
   ) {}
 
   async getOrders(): Promise<Orders[]> {

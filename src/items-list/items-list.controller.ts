@@ -20,7 +20,7 @@ export class ItemsListController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  getItemsListById(@Param('id') id: string) {
     return this.itemsListService.getUniqueItemsListById(id);
   }
 
@@ -35,7 +35,7 @@ export class ItemsListController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async delete(@Param('id') id: string) {
     await this.itemsListService.delete(id);
   }
 }

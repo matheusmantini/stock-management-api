@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { ItemsListService } from 'src/items-list/items-list.service';
-import { ProductsService } from 'src/products/products.service';
-import { ProductsRepository } from 'src/products/product.repository';
-import { ItemsListRepository } from 'src/items-list/items-list.repository';
+import { PrismaModule } from '../prisma/prisma.module';
+import { ItemsListService } from '../items-list/items-list.service';
+import { ProductsService } from '../products/products.service';
+import { ProductsRepository } from '../products/product.repository';
+import { ItemsListRepository } from '../items-list/items-list.repository';
 import { OrdersRepository } from './orders.repository';
 
 @Module({

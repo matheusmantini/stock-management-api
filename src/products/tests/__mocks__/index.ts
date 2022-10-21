@@ -1,4 +1,4 @@
-import { ProductsEntity } from "src/products/entity/products.entity";
+import { ProductsEntity } from 'src/products/entity/products.entity';
 
 export const productsEntityList: ProductsEntity[] = [
   { id: '1', name: 'Product 1', price: 1.11, qty_stock: 111 },
