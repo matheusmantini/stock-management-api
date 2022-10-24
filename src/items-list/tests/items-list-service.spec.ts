@@ -1,6 +1,5 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductsService } from '../../products/products.service';
+import { ProductsRepository } from '../../products/product.repository';
 import { ItemsListRepository } from '../items-list.repository';
 import { ItemsListService } from '../items-list.service';
 import {
@@ -13,7 +12,7 @@ import {
 
 describe('ItemsListService', () => {
   let itemsListService: ItemsListService;
-  let productsService: ProductsService;
+  let productsRepository: ProductsRepository;
   let itemsListRepository: ItemsListRepository;
 
   beforeEach(async () => {
@@ -21,9 +20,9 @@ describe('ItemsListService', () => {
       providers: [
         ItemsListService,
         {
-          provide: ProductsService,
+          provide: ProductsRepository,
           useValue: {
-            getUniqueProductById: jest
+            findByUniqueId: jest
               .fn()
               .mockResolvedValueOnce(productById[0])
               .mockResolvedValueOnce(productById[1])
@@ -44,13 +43,13 @@ describe('ItemsListService', () => {
     }).compile();
 
     itemsListService = module.get<ItemsListService>(ItemsListService);
-    productsService = module.get<ProductsService>(ProductsService);
+    productsRepository = module.get<ProductsRepository>(ProductsRepository);
     itemsListRepository = module.get<ItemsListRepository>(ItemsListRepository);
   });
 
   it('should be defined', () => {
     expect(itemsListService).toBeDefined();
-    expect(productsService).toBeDefined();
+    expect(productsRepository).toBeDefined();
     expect(itemsListRepository).toBeDefined();
   });
 
@@ -83,24 +82,23 @@ describe('ItemsListService', () => {
       expect(itemsListRepository.findByUnique).toHaveBeenCalledTimes(1);
     });
 
-    /* it('should throw an exception if item list was not found by informed id', async () => {
+    /* it("should throw an exception if there's no item list with informed id", async () => {
       // Arrange
       jest
         .spyOn(itemsListRepository, 'findByUnique')
         .mockResolvedValueOnce(undefined);
 
       // Assert
-      expect(itemsListService.getUniqueItemsListById('body')).rejects.toThrowError();
+      expect(itemsListService.getUniqueItemsListById(undefined)).rejects.toThrowError();
     }); */
 
     /* it('should throw an exception if product item was not found by informed id', async () => {
-      // Arrange
-      jest
-        .spyOn(itemsListRepository, 'findByUnique')
-        .mockResolvedValueOnce(undefined);
-
       // Assert
-      expect(itemsListService.getUniqueItemsListById('body')).rejects.toThrowError();
+      try {
+        await itemsListService.getUniqueItemsListById('55');
+      } catch (error) {
+        expect(error.message).toEqual("product with id '55' not found");
+      }
     }); */
   });
 
@@ -136,19 +134,17 @@ describe('ItemsListService', () => {
     });
 
     /* it('should throw an exception if was not found any product with informed product_id', async () => {
-      // Assert
-      try {
-        jest
-          .spyOn(productsService, 'getUniqueProductById')
-          .mockResolvedValueOnce(undefined);
+      const body = {
+        product_id: '4',
+        quantity: 3,
+      };
 
-        await itemsListService.create({
-          product_id: '5',
-          quantity: 3,
-        });
-      } catch (error) {
-        expect(error.message).toEqual("product not found with id '5'");
-      }
+      jest
+        .spyOn(productsRepository, 'findByUniqueId')
+        .mockResolvedValueOnce(undefined);
+
+      // Assert
+      expect(itemsListRepository.create(body)).rejects.toThrowError();
     }); */
 
     it('should throw an exception if informed quantity is less or equals to 0', async () => {
@@ -181,29 +177,31 @@ describe('ItemsListService', () => {
       expect(result).toEqual(updatedItemsListEntity);
     });
 
-    /* it("should throw an exception if there's no item list with informed id", async () => {
-      // Assert
-      try {
-        await itemsListService.updateQuantity('1', {
-          quantity: 5,
-        });
-      } catch (error) {
-        expect(error.message).toEqual("item list with id '1' not found");
-      }
-    }); */
-
-    /* it("should throw an exception if it didn't work at all", () => {
+    it("should throw an exception if there's no item list with informed id", async () => {
       // Arrange
       const body = {
         quantity: 5,
       };
       jest
-        .spyOn(itemsListService, 'updateQuantity')
+        .spyOn(itemsListRepository, 'findByUnique')
+        .mockResolvedValueOnce(undefined);
+
+      // Assert
+      expect(itemsListService.updateQuantity('1', body)).rejects.toThrowError();
+    });
+
+    it("should throw an exception if it didn't work at all", () => {
+      // Arrange
+      const body = {
+        quantity: 5,
+      };
+      jest
+        .spyOn(itemsListRepository, 'updateQuantity')
         .mockRejectedValueOnce(new Error());
 
       // Assert
       expect(itemsListService.updateQuantity('1', body)).rejects.toThrowError();
-    }); */
+    });
   });
 
   describe('delete', () => {
@@ -215,14 +213,15 @@ describe('ItemsListService', () => {
       expect(result).toBeUndefined();
     });
 
-    /* it("should throw an exception if there's no item list with informed id", async () => {
+    it("should throw an exception if there's no item list with informed id", async () => {
+      // Arrange
+      jest
+        .spyOn(itemsListRepository, 'findByUnique')
+        .mockResolvedValueOnce(undefined);
+
       // Assert
-      try {
-        await itemsListService.delete('1');
-      } catch (error) {
-        expect(error.message).toEqual("item list with id '1' not found");
-      }
-    }); */
+      expect(itemsListService.delete('1')).rejects.toThrowError();
+    });
 
     it('should throw an exception', () => {
       // Arrange

@@ -4,8 +4,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { ItemList } from '@prisma/client';
-import { ProductsService } from '../products/products.service';
+import { ProductsRepository } from '..//products/product.repository';
 import { CreateItemListDto, UpdateItemListDto } from './dto';
 import { ItemListComplete } from './items-list-complete.structure';
 import { ItemsListRepository } from './items-list.repository';
@@ -14,7 +13,7 @@ import { ItemsListRepository } from './items-list.repository';
 export class ItemsListService {
   constructor(
     private readonly itemsListRepository: ItemsListRepository,
-    private readonly productsService: ProductsService,
+    private readonly productsRepository: ProductsRepository,
   ) {}
 
   async getItemsList(): Promise<ItemListComplete[]> {
@@ -30,14 +29,14 @@ export class ItemsListService {
 
   async getUniqueItemsListById(id: string): Promise<ItemListComplete> {
     const orderItem = await this.itemsListRepository.findByUnique({ id });
-    const itemList = await this.productsService.getUniqueProductById(
+    const itemList = await this.productsRepository.findByUniqueId(
       orderItem.product_id,
     );
 
     if (!orderItem) {
       throw new NotFoundException(`item list with id '${id}' not found`);
     }
-    
+
     if (!itemList) {
       throw new NotFoundException(`product with id '${id}' not found`);
     }
@@ -55,9 +54,7 @@ export class ItemsListService {
   }
 
   async create(itemList: CreateItemListDto) {
-    const uniqueProduct = await this.productsService.getUniqueProductById(
-      itemList.product_id,
-    );
+    const uniqueProduct = await this.productsRepository.findByUniqueId(itemList.product_id);
 
     if (!uniqueProduct) {
       throw new NotFoundException(
@@ -79,7 +76,7 @@ export class ItemsListService {
 
   async updateQuantity(id: string, itemList: UpdateItemListDto) {
     const uniqueItemList = await this.itemsListRepository.findByUnique({ id });
-    
+
     if (!uniqueItemList) {
       throw new NotFoundException(`item list with id '${id}' not found`);
     }
