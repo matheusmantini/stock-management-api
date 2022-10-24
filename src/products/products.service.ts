@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Products } from '@prisma/client';
 import { CreateProductDto, UpdateProductQuantityDto } from './dto';
-import { ProductsRepository } from './product.repository';
+import { ProductsRepository } from './products.repository';
 
 @Injectable()
 export class ProductsService {

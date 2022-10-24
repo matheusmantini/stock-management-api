@@ -4,7 +4,7 @@ import { OrdersController } from './orders.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ItemsListService } from '../items-list/items-list.service';
 import { ProductsService } from '../products/products.service';
-import { ProductsRepository } from '../products/product.repository';
+import { ProductsRepository } from '../products/products.repository';
 import { ItemsListRepository } from '../items-list/items-list.repository';
 import { OrdersRepository } from './orders.repository';
 

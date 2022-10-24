@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { ProductsRepository } from '..//products/product.repository';
+import { ProductsRepository } from '../products/products.repository';
 import { CreateItemListDto, UpdateItemListDto } from './dto';
 import { ItemListComplete } from './items-list-complete.structure';
 import { ItemsListRepository } from './items-list.repository';
@@ -54,7 +54,9 @@ export class ItemsListService {
   }
 
   async create(itemList: CreateItemListDto) {
-    const uniqueProduct = await this.productsRepository.findByUniqueId(itemList.product_id);
+    const uniqueProduct = await this.productsRepository.findByUniqueId(
+      itemList.product_id,
+    );
 
     if (!uniqueProduct) {
       throw new NotFoundException(

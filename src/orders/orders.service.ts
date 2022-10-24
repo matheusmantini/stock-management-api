@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { Orders } from '@prisma/client';
 import { ItemsListService } from '../items-list/items-list.service';
-import { ProductsService } from '../products/products.service';
+import { ProductsRepository } from '../products/products.repository';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { OrdersRepository } from './orders.repository';
 
@@ -14,12 +14,12 @@ export class OrdersService {
   constructor(
     private readonly ordersRepository: OrdersRepository,
     private readonly itemsListService: ItemsListService,
-    private readonly productsService: ProductsService,
+    private readonly productsRepository: ProductsRepository,
   ) {}
 
   async getOrders(): Promise<Orders[]> {
-    const showAllOrders = await this.ordersRepository.findAll();
     const allOrders = [];
+    const showAllOrders = await this.ordersRepository.findAll();
 
     for (let i = 0; i < showAllOrders.length; i++) {
       const order = showAllOrders[i];
@@ -30,9 +30,11 @@ export class OrdersService {
         const orderItem = await this.itemsListService.getUniqueItemsListById(
           order.items_list_id[j],
         );
-        const itemList = await this.productsService.getUniqueProductById(
+        console.log('orderItem', orderItem);
+        const itemList = await this.productsRepository.findByUniqueId(
           orderItem.product_id,
         );
+        console.log('itemList', itemList);
         if (order.items_list_id.includes(orderItem.item_list_id)) {
           const shoppingItem = {
             itemListId: orderItem.item_list_id,
@@ -55,12 +57,7 @@ export class OrdersService {
 
       allOrders.push(newOrder);
     }
-    try {
-      // Retorna todos os pedidos
-      return allOrders;
-    } catch {
-      throw new InternalServerErrorException();
-    }
+    return allOrders;
   }
 
   async getUniqueOrderById(id: string): Promise<Partial<Orders>> {
@@ -72,7 +69,7 @@ export class OrdersService {
       const orderItem = await this.itemsListService.getUniqueItemsListById(
         uniqueOrder.items_list_id[j],
       );
-      const itemList = await this.productsService.getUniqueProductById(
+      const itemList = await this.productsRepository.findByUniqueId(
         orderItem.product_id,
       );
       if (uniqueOrder.items_list_id.includes(orderItem.item_list_id)) {
@@ -116,7 +113,7 @@ export class OrdersService {
         );
       }
 
-      const itemList = await this.productsService.getUniqueProductById(
+      const itemList = await this.productsRepository.findByUniqueId(
         orderItem.product_id,
       );
       totalAmountOrder += itemList.price * orderItem.quantity;
