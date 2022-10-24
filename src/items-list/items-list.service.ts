@@ -7,7 +7,7 @@ import {
 import { ItemList } from '@prisma/client';
 import { ProductsService } from '../products/products.service';
 import { CreateItemListDto, UpdateItemListDto } from './dto';
-import { IItemListComplete } from './items-list-complete.structure';
+import { ItemListComplete } from './items-list-complete.structure';
 import { ItemsListRepository } from './items-list.repository';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class ItemsListService {
     private readonly productsService: ProductsService,
   ) {}
 
-  async getItemsList(): Promise<ItemList[]> {
+  async getItemsList(): Promise<ItemListComplete[]> {
     const newItemsList = [];
     const allItemsList = await this.itemsListRepository.findAll();
 
@@ -25,20 +25,22 @@ export class ItemsListService {
       const newItem = await this.getUniqueItemsListById(allItemsList[i].id);
       newItemsList.push(newItem);
     }
-
-    try {
-      // Retorna todos os itemsList
-      return newItemsList;
-    } catch {
-      throw new InternalServerErrorException();
-    }
+    return newItemsList;
   }
 
-  async getUniqueItemsListById(id: string): Promise<IItemListComplete> {
+  async getUniqueItemsListById(id: string): Promise<ItemListComplete> {
     const orderItem = await this.itemsListRepository.findByUnique({ id });
     const itemList = await this.productsService.getUniqueProductById(
       orderItem.product_id,
     );
+
+    if (!orderItem) {
+      throw new NotFoundException(`item list with id '${id}' not found`);
+    }
+    
+    if (!itemList) {
+      throw new NotFoundException(`product with id '${id}' not found`);
+    }
 
     const itemListComplete = {
       item_list_id: orderItem.id,
@@ -48,12 +50,8 @@ export class ItemsListService {
       quantity: orderItem.quantity,
       total: itemList.price * orderItem.quantity,
     };
-    try {
-      // Retorna um ItemsList específico pelo ID com informações mais detalhadas
-      return itemListComplete;
-    } catch {
-      throw new InternalServerErrorException();
-    }
+
+    return itemListComplete;
   }
 
   async create(itemList: CreateItemListDto) {
@@ -63,7 +61,7 @@ export class ItemsListService {
 
     if (!uniqueProduct) {
       throw new NotFoundException(
-        `item not found with id '${itemList.product_id}'`,
+        `product not found with id '${itemList.product_id}'`,
       );
     }
 
@@ -81,7 +79,7 @@ export class ItemsListService {
 
   async updateQuantity(id: string, itemList: UpdateItemListDto) {
     const uniqueItemList = await this.itemsListRepository.findByUnique({ id });
-
+    
     if (!uniqueItemList) {
       throw new NotFoundException(`item list with id '${id}' not found`);
     }
