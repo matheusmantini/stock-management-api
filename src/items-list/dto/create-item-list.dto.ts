@@ -1,5 +1,3 @@
-import { Prisma } from '@prisma/client';
-import { Exclude } from 'class-transformer';
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateItemListDto {
@@ -10,7 +8,4 @@ export class CreateItemListDto {
   @IsNumber()
   @IsNotEmpty()
   quantity: number;
-
-  @Exclude()
-  product?: Prisma.ProductsCreateNestedOneWithoutProductItemInput;
 }
