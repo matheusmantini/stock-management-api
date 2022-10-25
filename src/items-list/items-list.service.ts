@@ -29,13 +29,14 @@ export class ItemsListService {
 
   async getUniqueItemsListById(id: string): Promise<ItemListComplete> {
     const orderItem = await this.itemsListRepository.findByUnique({ id });
-    const itemList = await this.productsRepository.findByUniqueId(
-      orderItem.product_id,
-    );
 
     if (!orderItem) {
       throw new NotFoundException(`item list with id '${id}' not found`);
     }
+
+    const itemList = await this.productsRepository.findByUniqueId(
+      orderItem.product_id,
+    );
 
     if (!itemList) {
       throw new NotFoundException(`product with id '${id}' not found`);

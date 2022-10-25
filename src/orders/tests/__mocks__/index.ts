@@ -10,15 +10,15 @@ export const productsList: ProductList[] = [
     id: '1',
     name: 'ENERGÉTICO RED BULL ENERGY DRINK 355ML',
     price: 10.0,
-    qty_stock: 220
+    qty_stock: 220,
   },
   {
     id: '2',
     name: 'PAPEL TOALHA SNOB C/ 2UN',
     price: 5.0,
-    qty_stock: 330
-  }
-]
+    qty_stock: 330,
+  },
+];
 
 export const orderItem: OrderItemEntity[] = [
   {
@@ -133,5 +133,28 @@ export const ordersEntityListResult: OrdersEntityList[] = [
 export const updatedOrderEntity = {
   client_name: 'João',
   delivery_date: new Date('2023-07-05'),
-  items_list_id: ['1', '2', '3'],
+  items_list_id: ['1'],
+};
+
+export const updatedOrderEntityRepositoryReturn = {
+  id: '1',
+  client_name: 'João',
+  delivery_date: new Date('2023-07-05'),
+  items_list_id: ['1'],
+  total_amount: 250.0,
+};
+
+export const updatedOrderEntityResult = {
+  id: '1',
+  client_name: 'João',
+  delivery_date: new Date('2023-07-05'),
+  shopping_list: [
+    {
+      itemListId: '1',
+      product: 'ENERGÉTICO RED BULL ENERGY DRINK 355ML',
+      quantity: 25,
+      price: 10.0,
+    },
+  ],
+  total_amount: 250.0,
 };

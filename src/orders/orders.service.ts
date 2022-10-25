@@ -30,11 +30,11 @@ export class OrdersService {
         const orderItem = await this.itemsListService.getUniqueItemsListById(
           order.items_list_id[j],
         );
-        console.log('orderItem', orderItem);
+        
         const itemList = await this.productsRepository.findByUniqueId(
           orderItem.product_id,
         );
-        console.log('itemList', itemList);
+        
         if (order.items_list_id.includes(orderItem.item_list_id)) {
           const shoppingItem = {
             itemListId: orderItem.item_list_id,
@@ -62,7 +62,15 @@ export class OrdersService {
 
   async getUniqueOrderById(id: string): Promise<Partial<Orders>> {
     const uniqueOrder = await this.ordersRepository.findByUnique({ id });
+
+    if(!uniqueOrder){
+      throw new NotFoundException(
+        `order not found with id '${id}'`,
+      );
+    }
+
     const shoppingList = [];
+    let newOrder = {};
     let totalAmount = 0;
 
     for (let j = 0; j < uniqueOrder.items_list_id.length; j++) {
@@ -84,7 +92,7 @@ export class OrdersService {
       }
     }
 
-    const newOrder = {
+    newOrder = {
       id: uniqueOrder.id,
       client_name: uniqueOrder.client_name,
       delivery_date: uniqueOrder.delivery_date,
@@ -92,12 +100,7 @@ export class OrdersService {
       total_amount: totalAmount,
     };
 
-    try {
-      // Retorna um pedido específico de acordo com o ID informado
-      return newOrder;
-    } catch {
-      throw new InternalServerErrorException();
-    }
+    return newOrder;
   }
 
   async createOrder(order: CreateOrderDto) {
@@ -106,16 +109,17 @@ export class OrdersService {
       const orderItem = await this.itemsListService.getUniqueItemsListById(
         order.items_list_id[i],
       );
-
+      
       if (!orderItem) {
         throw new NotFoundException(
-          `item not found with id ${order.items_list_id[i]}`,
+          `item not found with id '${order.items_list_id[i]}'`,
         );
       }
 
       const itemList = await this.productsRepository.findByUniqueId(
         orderItem.product_id,
       );
+
       totalAmountOrder += itemList.price * orderItem.quantity;
     }
     order.total_amount = totalAmountOrder;
@@ -127,10 +131,10 @@ export class OrdersService {
     }
   }
 
-  updateOrder(id: string, order: UpdateOrderDto): Promise<Orders> {
+  async updateOrder(id: string, order: UpdateOrderDto): Promise<Orders> {
     try {
       // Retorna o pedido alterado
-      return this.ordersRepository.update(id, order);
+      return await this.ordersRepository.update(id, order);
     } catch {
       throw new InternalServerErrorException();
     }

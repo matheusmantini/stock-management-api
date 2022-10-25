@@ -12,5 +12,5 @@ export class CreateOrderDto {
   @IsNotEmpty()
   items_list_id: string[];
 
-  total_amount: number;
+  total_amount?: number;
 }
