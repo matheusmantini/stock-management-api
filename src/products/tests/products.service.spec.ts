@@ -16,9 +16,6 @@ describe('ProductsService', () => {
           useValue: {
             findAll: jest.fn().mockResolvedValue(productsEntityList),
             findByUniqueId: jest.fn().mockResolvedValue(productsEntityList[0]),
-            findByUniqueName: jest
-              .fn()
-              .mockResolvedValue(productsEntityList[0]),
             create: jest.fn().mockResolvedValue(undefined),
             update: jest.fn().mockResolvedValue(updatedProductsEntity),
             delete: jest.fn().mockResolvedValue(undefined),
@@ -80,34 +77,6 @@ describe('ProductsService', () => {
     });
   });
 
-  describe('getUniqueProductByName', () => {
-    it('should return a product by its name successfully', async () => {
-      // Act
-      const result = await productsService.getUniqueProductByName(
-        'AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML',
-      );
-
-      // Assert
-      expect(result).toEqual(productsEntityList[0]);
-      expect(productsRepository.findByUniqueName).toHaveBeenCalledTimes(1);
-    });
-
-    it("should throw an exception if there's no product with informed name", () => {
-      // Arrange
-
-      jest
-        .spyOn(productsRepository, 'findByUniqueName')
-        .mockResolvedValueOnce(undefined);
-
-      // Assert
-      expect(
-        productsService.getUniqueProductByName(
-          'AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML',
-        ),
-      ).rejects.toThrowError();
-    });
-  });
-
   describe('createProduct', () => {
     it('should create a new product successfully', async () => {
       // Arrange
@@ -119,8 +88,8 @@ describe('ProductsService', () => {
       };
 
       jest
-        .spyOn(productsRepository, 'findByUniqueName')
-        .mockResolvedValueOnce(undefined);
+        .spyOn(productsRepository, 'findAll')
+        .mockResolvedValueOnce(productsEntityList);
 
       // Act
       const result = await productsService.createProduct(body);
@@ -134,8 +103,8 @@ describe('ProductsService', () => {
       const body = { id: '1', name: 'Product 1', price: 1.11, qty_stock: 110 };
 
       jest
-        .spyOn(productsRepository, 'findByUniqueName')
-        .mockResolvedValueOnce(productsEntityList[0]);
+        .spyOn(productsRepository, 'findAll')
+        .mockResolvedValueOnce(productsEntityList);
 
       // Assert
       expect(productsService.createProduct(body)).rejects.toThrowError();
@@ -151,8 +120,8 @@ describe('ProductsService', () => {
       };
 
       jest
-        .spyOn(productsRepository, 'findByUniqueName')
-        .mockResolvedValueOnce(undefined);
+        .spyOn(productsRepository, 'findAll')
+        .mockResolvedValueOnce(productsEntityList);
 
       // Assert
       expect(productsService.createProduct(body)).rejects.toThrowError();
@@ -168,7 +137,7 @@ describe('ProductsService', () => {
       };
 
       jest
-        .spyOn(productsRepository, 'findByUniqueName')
+        .spyOn(productsRepository, 'findAll')
         .mockResolvedValueOnce(undefined);
 
       // Assert
@@ -199,7 +168,7 @@ describe('ProductsService', () => {
         quantity: 1,
       };
       jest
-        .spyOn(productsRepository, 'findByUniqueName')
+        .spyOn(productsRepository, 'findAll')
         .mockResolvedValueOnce(undefined);
 
       // Act

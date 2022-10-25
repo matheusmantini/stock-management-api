@@ -11,14 +11,8 @@ export class ProductsRepository {
   }
 
   findByUniqueId(id: string) {
-    return this.prismaService.products.findFirst({
+    return this.prismaService.products.findUnique({
       where: { id },
-    });
-  }
-
-  findByUniqueName(name: string) {
-    return this.prismaService.products.findFirst({
-      where: { name },
     });
   }
 

@@ -84,36 +84,6 @@ describe('ProductsController', () => {
     });
   });
 
-  describe('getUniqueProductByName', () => {
-    it('should return a product by its name successfully', async () => {
-      // Act
-      const result = await productsController.getUniqueProductByName(
-        'AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML',
-      );
-
-      // Assert
-      expect(result).toEqual(productsEntityList[0]);
-      expect(productsService.getUniqueProductByName).toHaveBeenCalledTimes(1);
-      expect(productsService.getUniqueProductByName).toHaveBeenCalledWith(
-        'AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML',
-      );
-    });
-
-    it('should throw an exception', () => {
-      // Arrange
-      jest
-        .spyOn(productsService, 'getUniqueProductByName')
-        .mockRejectedValueOnce(new Error());
-
-      // Assert
-      expect(
-        productsController.getUniqueProductByName(
-          'AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML',
-        ),
-      ).rejects.toThrowError();
-    });
-  });
-
   describe('createProduct', () => {
     it('should create a new product successfully', async () => {
       // Arrange
