@@ -71,7 +71,7 @@ export class ItemsListService {
 
     try {
       // Retorna o itemList criado
-      await this.itemsListRepository.create(itemList);
+      return await this.itemsListRepository.create(itemList);
     } catch {
       throw new InternalServerErrorException();
     }
