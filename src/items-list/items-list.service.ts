@@ -1,32 +1,109 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateItemListDto } from './dto/create-item-list.dto';
-import { UpdateItemListDto } from './dto/update-item-list.dto';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { ProductsRepository } from '../products/products.repository';
+import { CreateItemListDto, UpdateItemListDto } from './dto';
+import { ItemListComplete } from './items-list-complete.structure';
+import { ItemsListRepository } from './items-list.repository';
 
 @Injectable()
 export class ItemsListService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly itemsListRepository: ItemsListRepository,
+    private readonly productsRepository: ProductsRepository,
+  ) {}
 
-  create(createItemListDto: CreateItemListDto) {
-    return this.prisma.itemList.create({ data: createItemListDto });
+  async getItemsList(): Promise<ItemListComplete[]> {
+    const newItemsList = [];
+    const allItemsList = await this.itemsListRepository.findAll();
+
+    for (let i = 0; i < allItemsList.length; i++) {
+      const newItem = await this.getUniqueItemsListById(allItemsList[i].id);
+      newItemsList.push(newItem);
+    }
+    return newItemsList;
   }
 
-  findAll() {
-    return this.prisma.itemList.findMany();
+  async getUniqueItemsListById(id: string): Promise<ItemListComplete> {
+    const orderItem = await this.itemsListRepository.findByUnique({ id });
+
+    if (!orderItem) {
+      throw new NotFoundException(`item list with id '${id}' not found`);
+    }
+
+    const itemList = await this.productsRepository.findByUniqueId(
+      orderItem.product_id,
+    );
+
+    if (!itemList) {
+      throw new NotFoundException(`product with id '${id}' not found`);
+    }
+
+    const itemListComplete = {
+      item_list_id: orderItem.id,
+      product_id: orderItem.product_id,
+      product_name: itemList.name,
+      price: itemList.price,
+      quantity: orderItem.quantity,
+      total: itemList.price * orderItem.quantity,
+    };
+
+    return itemListComplete;
   }
 
-  findOneById(id: string) {
-    return this.prisma.itemList.findUnique({ where: { id } });
+  async create(itemList: CreateItemListDto) {
+    const uniqueProduct = await this.productsRepository.findByUniqueId(
+      itemList.product_id,
+    );
+
+    if (!uniqueProduct) {
+      throw new NotFoundException(
+        `product not found with id '${itemList.product_id}'`,
+      );
+    }
+
+    if (itemList.quantity < 1) {
+      throw new BadRequestException('Quantity must be higher than 0.');
+    }
+
+    try {
+      // Retorna o itemList criado
+      await this.itemsListRepository.create(itemList);
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
-  updateQuantity(id: string, updateItemListDto: UpdateItemListDto) {
-    return this.prisma.itemList.update({
-      where: { id },
-      data: updateItemListDto,
-    });
+  async updateQuantity(id: string, itemList: UpdateItemListDto) {
+    const uniqueItemList = await this.itemsListRepository.findByUnique({ id });
+
+    if (!uniqueItemList) {
+      throw new NotFoundException(`item list with id '${id}' not found`);
+    }
+
+    try {
+      // Retorna o itemList atualizado
+      return await this.itemsListRepository.updateQuantity(id, itemList);
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
-  remove(id: string) {
-    return this.prisma.itemList.delete({ where: { id } });
+  async delete(id: string) {
+    const uniqueItemList = await this.itemsListRepository.findByUnique({ id });
+
+    if (!uniqueItemList) {
+      throw new NotFoundException(`item list with id '${id}' not found`);
+    }
+
+    try {
+      // Retorna o itemList deletado
+      await this.itemsListRepository.delete(id);
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 }
