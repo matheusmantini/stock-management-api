@@ -36,8 +36,8 @@
 - [x] Editar as informações de um item de pedido específico pelo id
 - [x] Deletar item de pedido
 
-## Deploy no Heroku:
-> https://shopper-stock-management.herokuapp.com/api/
+## Documentação da API com Swagger: :page_facing_up:	
+http://localhost:3001/api
 
 ## Como rodar a aplicação:
 

@@ -21,13 +21,8 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async getUniqueProductById(id: string) {
+  async getUniqueProductById(@Param('id') id: string) {
     return this.productsService.getUniqueProductById(id);
-  }
-
-  @Get('/byName/:name')
-  async getUniqueProductByName(name: string) {
-    return this.productsService.getUniqueProductByName(name);
   }
 
   @Post()

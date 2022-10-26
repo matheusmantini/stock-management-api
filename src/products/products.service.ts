@@ -28,49 +28,30 @@ export class ProductsService {
   }
 
   async getUniqueProductById(id: string): Promise<Products> {
-    try {
-      const product = await this.productsRepository.findByUniqueId(id);
+    const product = await this.productsRepository.findByUniqueId(id);
 
-      if (!product) {
-        throw new NotFoundException(`product with id '${id}' not found`);
-      }
-
-      // Retorna um produto específico pelo ID
-      return product;
-    } catch {
-      throw new InternalServerErrorException();
+    if (product === null) {
+      throw new NotFoundException(`product with id '${id}' not found`);
     }
-  }
 
-  async getUniqueProductByName(name: string): Promise<Products> {
-    try {
-      const product = await this.productsRepository.findByUniqueName(name);
-
-      if (!product) {
-        throw new NotFoundException(`product with name '${name}' not found`);
-      }
-      // Retorna um produto específico pelo nome
-      return product;
-    } catch {
-      throw new InternalServerErrorException();
-    }
+    return product;
   }
 
   async createProduct(product: CreateProductDto) {
-    try {
-      const uniqueProduct = await this.productsRepository.findByUniqueName(
-        product.name,
-      );
+    const listedProducts = await this.productsRepository.findAll();
 
-      if (uniqueProduct) {
+    for (let i = 0; i < listedProducts.length; i++) {
+      if (listedProducts[i].name === product.name) {
         throw new ConflictException('Name already exists');
       }
+    }
 
-      if (product.price <= 0 || product.qty_stock <= 0) {
-        throw new BadRequestException(
-          'Price and quantity in stock must be higher than 0',
-        );
-      }
+    if (product.price <= 0 || product.qty_stock <= 0) {
+      throw new BadRequestException(
+        'Price and quantity in stock must be higher than 0',
+      );
+    }
+    try {
       // Retorna o produto criado
       await this.productsRepository.create(product);
     } catch {
@@ -115,12 +96,12 @@ export class ProductsService {
   }
 
   async delete(id: string) {
-    try {
-      const uniqueProduct = await this.productsRepository.findByUniqueId(id);
+    const uniqueProduct = await this.productsRepository.findByUniqueId(id);
 
-      if (!uniqueProduct) {
-        throw new NotFoundException(`Product not found by id ${id}`);
-      }
+    if (!uniqueProduct) {
+      throw new NotFoundException(`Product not found by id ${id}`);
+    }
+    try {
       // Retorna o produto deletado
       await this.productsRepository.delete(id);
     } catch {

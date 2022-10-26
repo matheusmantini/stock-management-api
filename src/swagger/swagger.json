@@ -31,7 +31,21 @@
         },
         "responses": {
           "201": {
-            "description": "Produto cadastrado com sucesso."
+            "description": "Produto cadastrado com sucesso!",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
+                      "name": "Água Mineral",
+                      "price": 3.45,
+                      "qty_stock": 25
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "É retornado quando já existe um produto cadastrado no sistema com o nome informado",
@@ -88,59 +102,6 @@
                         "qty_stock": 159
                       }
                     ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/products/byName/{name}": {
-      "get": {
-        "summary": "Retorna um produto específico de acordo com o nome informado",
-        "tags": ["PRODUTOS"],
-        "parameters": [
-          {
-            "name": "name",
-            "in":"path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Register": {
-                    "summary": "Retorna um produto específico",
-                    "value": {
-                      "id": "16",
-                      "name": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                      "price": 20.49,
-                      "qty_stock": 158
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "É retornado quando um produto não é encontrado",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Error": {
-                    "summary": "Error",
-                    "value": {
-                      "statusCode": 404,
-                      "message": "product with name 'AZEITE  PORTUGUÊS EXTRA VIRGEM' not found",
-                      "error": "Not Found"
-                    }
                   }
                 }
               }
@@ -301,7 +262,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Produto deletado com sucesso"
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Deleta um produto específico",
+                    "value": {
+                      "id": "43e172ac-f044-4599-a756-77c54afdfc33",
+                      "name": "SmartPhone S20FE 2022",
+                      "price": 3500.99,
+                      "qty_stock": 32
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
             "description": "É retornado quando um produto não é encontrado",
@@ -348,7 +324,25 @@
         },
         "responses": {
           "201": {
-            "description": "Pedido cadastrado com sucesso"
+            "description": "Pedido cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
             "description": "É retornado quando um item da lista de ID's não é contrado",
@@ -381,30 +375,27 @@
                   "Search All": {
                     "value": [
                       {
-                        "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
-                        "client_name": "Joana",
-                        "delivery_date": "2022-11-05T12:09:04.374Z",
+                        "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                        "client_name": "João",
+                        "delivery_date": "2022-10-05T12:09:04.374Z",
                         "shopping_list": [
                           {
-                            "itemListId": "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
-                            "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                            "quantity": 15,
-                            "price": 20.49
+                            "product": "COLHER DESCARTÁVEL MASTER PRAFESTA BRANCA C/ 50UN",
+                            "quantity": 3,
+                            "price": 5.99
                           },
                           {
-                            "itemListId": "d3c0291d-0c89-4b3a-a6a3-359f1924ed95",
-                            "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                            "quantity": 11,
-                            "price": 20.49
+                            "product": "GARFO DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
+                            "quantity": 2,
+                            "price": 7.49
                           },
                           {
-                            "itemListId": "5e8b4480-5b06-4794-a2fc-c70dc97ad277",
-                            "product": "ÁGUA MINERAL SEM GÁS MINALBA 1,5L",
-                            "quantity": 10,
-                            "price": 2.29
+                            "product": "FACA DESCARTÁVEL MASTER PRAFESTA CRYSTAL C/ 50UN",
+                            "quantity": 5,
+                            "price": 8.99
                           }
                         ],
-                        "total_amount": 555.64
+                        "total_amount": 77.9
                       }
                     ]
                   }
@@ -438,30 +429,14 @@
                   "Register": {
                     "summary": "Retorna um pedido específico",
                     "value": {
-                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
-                      "client_name": "Joana",
-                      "delivery_date": "2022-11-05T12:09:04.374Z",
-                      "shopping_list": [
-                        {
-                          "itemListId": "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
-                          "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                          "quantity": 15,
-                          "price": 20.49
-                        },
-                        {
-                          "itemListId": "d3c0291d-0c89-4b3a-a6a3-359f1924ed95",
-                          "product": "AZEITE  PORTUGUÊS EXTRA VIRGEM GALLO 500ML",
-                          "quantity": 11,
-                          "price": 20.49
-                        },
-                        {
-                          "itemListId": "5e8b4480-5b06-4794-a2fc-c70dc97ad277",
-                          "product": "ÁGUA MINERAL SEM GÁS MINALBA 1,5L",
-                          "quantity": 10,
-                          "price": 2.29
-                        }
-                      ],
-                      "total_amount": 555.64
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
                     }
                   }
                 }
@@ -510,14 +485,13 @@
                 "Register": {
                   "summary": "Altera um pedido",
                   "value": {
-                    "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
-                    "client_name": "Joana",
-                    "delivery_date": "2022-11-05T12:09:04.374Z",
-                    "items_list_id": [
-                      "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
-                      "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
-                    ],
-                    "total_amount": 555.64
+                    "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
+                      "items_list_id": [
+                        "1",
+                        "2",
+                        "3"
+                      ]
                   }
                 }
               }
@@ -526,21 +500,20 @@
         },
         "responses": {
           "200": {
-            "description": "Retorna o pedido após alteração",
+            "description": "Sucesso",
             "content": {
               "application/json": {
                 "examples": {
                   "Register": {
                     "summary": "Mostra o pedido após alteração",
                     "value": {
-                      "id": "e10bdc46-e520-4209-aae4-5c474ff2549e",
-                      "client_name": "Joana",
-                      "delivery_date": "2022-11-05T12:09:04.374Z",
+                      "id": "4720c32a-9eee-4b63-8450-e175a536f924",
+                      "client_name": "João",
+                      "delivery_date": "2022-10-05T12:09:04.374Z",
                       "items_list_id": [
-                        "b9b200da-a2b2-4cd3-93e0-d0b58d6b3ac3",
-                        "5e8b4480-5b06-4794-a2fc-c70dc97ad277"
-                      ],
-                      "total_amount": 555.64
+                        "1",
+                        "3"
+                      ]
                     }
                   }
                 }
@@ -591,7 +564,21 @@
         },
         "responses": {
           "201": {
-            "description": "Item adicionado com sucesso."
+            "description": "Item adicionado na lista de compras com sucesso!",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Create": {
+                    "value": {
+                      "id": "0b2f1698-a548-4175-b51e-1673a88e71d4",
+                      "name": "Água Mineral",
+                      "price": 3.45,
+                      "qty_stock": 25
+                    }
+                  }
+                }
+              }
+            }
           },
           
           "404": {
@@ -761,7 +748,7 @@
         },
         "responses": {
           "200": {
-            "description": "Item alterado com sucesso.",
+            "description": "Sucesso",
             "content": {
               "application/json": {
                 "examples": {
@@ -811,7 +798,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Item deletado com sucesso"
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Register": {
+                    "summary": "Deleta um item de pedido específico",
+                    "value": {
+                      "id": "3",
+                      "product_id": "48",
+                      "quantity": 5
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
             "description": "É retornado quando um item de pedido não é encontrado",

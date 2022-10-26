@@ -26,7 +26,7 @@ export class ItemsListController {
 
   @Post()
   async create(@Body() body: CreateItemListDto) {
-    await this.itemsListService.create(body);
+    return await this.itemsListService.create(body);
   }
 
   @Patch(':id')

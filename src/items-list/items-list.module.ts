@@ -9,12 +9,7 @@ import { ItemsListRepository } from './items-list.repository';
 
 @Module({
   controllers: [ItemsListController],
-  providers: [
-    ItemsListService,
-    ItemsListRepository,
-    ProductsService,
-    ProductsRepository,
-  ],
+  providers: [ItemsListService, ItemsListRepository, ProductsService, ProductsRepository],
   imports: [PrismaModule, ProductsModule],
 })
 export class ItemsListModule {}

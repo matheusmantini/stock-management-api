@@ -20,7 +20,7 @@ model Orders {
 
 model Products {
   id          String     @id @default(uuid())
-  name        String     @unique
+  name        String
   price       Float      @default(0.00)
   qty_stock   Int        @default(0)
   ProductItem ItemList[]
@@ -28,7 +28,7 @@ model Products {
 
 model ItemList {
   id         String   @id @default(uuid())
-  product    Products? @relation(fields: [product_id], references: [id])
+  product    Products @relation(fields: [product_id], references: [id])
   product_id String
   quantity   Int
 }
