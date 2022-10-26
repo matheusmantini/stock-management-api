@@ -151,8 +151,9 @@ describe('ProductsService', () => {
         price: 4.44,
         qty_stock: 0,
       };
+
       jest
-        .spyOn(productsService, 'createProduct')
+        .spyOn(productsRepository, 'create')
         .mockRejectedValueOnce(new Error());
 
       // Assert
