@@ -35,7 +35,7 @@ export class OrdersController {
         );
       }
 
-      const itemList = await this.productsService.findOneById(
+      const itemList = await this.productsService.getUniqueProductById(
         orderItem.product_id,
       );
       totalAmountOrder += itemList.price * orderItem.quantity;
@@ -58,7 +58,7 @@ export class OrdersController {
         const orderItem = await this.itemsListService.findOneById(
           order.items_list_id[j],
         );
-        const itemList = await this.productsService.findOneById(
+        const itemList = await this.productsService.getUniqueProductById(
           orderItem.product_id,
         );
         if (order.items_list_id.includes(orderItem.id)) {

@@ -65,15 +65,14 @@ describe('ProductsService', () => {
       expect(productsRepository.findByUniqueId).toHaveBeenCalledTimes(1);
     });
 
-    it("should throw an exception if there's no product with informed id", () => {
-      // Arrange
-
+    it("should throw an exception if there's no product with informed id", async () => {
+      
       jest
         .spyOn(productsRepository, 'findByUniqueId')
-        .mockResolvedValueOnce(undefined);
-
-      // Assert
-      expect(productsService.getUniqueProductById('1')).rejects.toThrowError();
+        .mockResolvedValueOnce(null);
+      
+      
+        expect(productsService.getUniqueProductById('1')).rejects.toThrowError();
     });
   });
 
@@ -138,7 +137,7 @@ describe('ProductsService', () => {
 
       jest
         .spyOn(productsRepository, 'findAll')
-        .mockResolvedValueOnce(undefined);
+        .mockResolvedValueOnce(productsEntityList);
 
       // Assert
       expect(productsService.createProduct(body)).rejects.toThrowError();

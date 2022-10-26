@@ -28,18 +28,13 @@ export class ProductsService {
   }
 
   async getUniqueProductById(id: string): Promise<Products> {
-    try {
-      const product = await this.productsRepository.findByUniqueId(id);
-
-      if (!product) {
-        throw new NotFoundException(`product with id '${id}' not found`);
-      }
-
-      // Retorna um produto específico pelo ID
-      return product;
-    } catch {
-      throw new InternalServerErrorException();
+    const product = await this.productsRepository.findByUniqueId(id);
+    
+    if (product === null) {
+      throw new NotFoundException(`product with id '${id}' not found`);
     }
+    
+    return product;
   }
 
   async createProduct(product: CreateProductDto) {

@@ -13,7 +13,7 @@ export class ItemsListController {
 
   @Post()
   async create(@Body() createItemListDto: CreateItemListDto) {
-    const product = await this.productsService.findOneById(
+    const product = await this.productsService.getUniqueProductById(
       createItemListDto.product_id,
     );
     if (!product) {
@@ -44,7 +44,7 @@ export class ItemsListController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const orderItem = await this.itemsListService.findOneById(id);
-    const itemList = await this.productsService.findOneById(
+    const itemList = await this.productsService.getUniqueProductById(
       orderItem.product_id,
     );
 
